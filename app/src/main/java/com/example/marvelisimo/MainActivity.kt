@@ -24,7 +24,7 @@ class MainActivity : AppCompatActivity() {
 
 
         //thread
-        MarvelRetrofit.marvelService.getAllCharacters(limit = 15, offset = 0)
+        MarvelRetrofit.marvelService.getAllCharacters(limit = 100)
             .subscribeOn(Schedulers.newThread())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe { result, err ->
@@ -36,7 +36,7 @@ class MainActivity : AppCompatActivity() {
                 }
                 println("PLZ FUNGERA: $heroList")
                 println("PLZ FUNGERA: ${result.data.results[10].name}")
-                val exampleList = generateDummyList(100, heroList)
+                val exampleList = generateDummyList(heroList.size, heroList)
                 recycler_view.adapter = MarvelAdapter(exampleList)
                 recycler_view.layoutManager = LinearLayoutManager(this)
                 recycler_view.setHasFixedSize(true)
