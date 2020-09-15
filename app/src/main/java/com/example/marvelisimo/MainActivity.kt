@@ -1,5 +1,6 @@
 package com.example.marvelisimo
 
+import android.annotation.SuppressLint
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -11,29 +12,40 @@ import retrofit2.http.GET
 
 class MainActivity : AppCompatActivity() {
 
+    @SuppressLint("CheckResult")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        val exampleList = generateDummyList(100)
 
-        recycler_view.adapter = MarvelAdapter(exampleList)
-        recycler_view.layoutManager = LinearLayoutManager(this)
-        recycler_view.setHasFixedSize(true)
+        val heroList = mutableListOf<CharacterDataWrapper>()
+
+
+
 
         //thread
-        MarvelRetrofit.marvelService.getAllCharacters(limit = 1, offset = 1)
+        MarvelRetrofit.marvelService.getAllCharacters(nameStartsWith = "sp", limit = 15, offset = 0)
             .subscribeOn(Schedulers.newThread())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe { result, err ->
                 if (err?.message != null) Log.d("__", "Error getAllCharacters " + err.message)
                 else {
+                    heroList.add(result)
                     Log.d("___", "I got a CharacterDataWrapper $result")
+                    println(heroList.size)
                 }
+                println("PLZ FUNGERA: $heroList")
+                println("PLZ FUNGERA: ${result.data.results[10].name}")
+                val exampleList = generateDummyList(100, heroList)
+                recycler_view.adapter = MarvelAdapter(exampleList)
+                recycler_view.layoutManager = LinearLayoutManager(this)
+                recycler_view.setHasFixedSize(true)
             }
 
+
+
     }
-    private fun generateDummyList(size: Int): List<MarvelItem> {
+    private fun generateDummyList(size: Int, heroList: List<CharacterDataWrapper>): List<MarvelItem> {
         val list = ArrayList<MarvelItem>()
         for (i in 0 until size) {
             val drawable = when (i % 3) {
@@ -41,8 +53,11 @@ class MainActivity : AppCompatActivity() {
                 1 -> R.drawable.ic_audio
                 else -> R.drawable.ic_sun
             }
-            val item = MarvelItem(drawable, "Item $i", "Line 2")
-            list += item
+
+                val item = MarvelItem(drawable, heroList[0].data.results[12].name, heroList[0].data.results[12].description)
+                list += item
+
+
         }
         return list
     }
