@@ -24,7 +24,7 @@ class MainActivity : AppCompatActivity() {
 
 
         //thread
-        MarvelRetrofit.marvelService.getAllCharacters(nameStartsWith = "sp", limit = 15, offset = 0)
+        MarvelRetrofit.marvelService.getAllCharacters(limit = 15, offset = 0)
             .subscribeOn(Schedulers.newThread())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe { result, err ->
@@ -53,10 +53,14 @@ class MainActivity : AppCompatActivity() {
                 1 -> R.drawable.ic_audio
                 else -> R.drawable.ic_sun
             }
-
-                val item = MarvelItem(drawable, heroList[0].data.results[12].name, heroList[0].data.results[12].description)
+            for(x in heroList[0].data.results.indices) {
+                val item = MarvelItem(
+                    drawable,
+                    heroList[0].data.results[x].name,
+                    heroList[0].data.results[x].description
+                )
                 list += item
-
+            }
 
         }
         return list
