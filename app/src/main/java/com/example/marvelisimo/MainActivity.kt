@@ -8,7 +8,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.activity_main.*
-import retrofit2.http.GET
 
 class MainActivity : AppCompatActivity() {
 
@@ -19,9 +18,6 @@ class MainActivity : AppCompatActivity() {
 
 
         val heroList = mutableListOf<CharacterDataWrapper>()
-
-
-
 
         //thread
         MarvelRetrofit.marvelService.getAllCharacters(limit = 100)
@@ -41,29 +37,22 @@ class MainActivity : AppCompatActivity() {
                 recycler_view.layoutManager = LinearLayoutManager(this)
                 recycler_view.setHasFixedSize(true)
             }
-
-
-
     }
+
     private fun generateDummyList(size: Int, heroList: List<CharacterDataWrapper>): List<MarvelItem> {
         val list = ArrayList<MarvelItem>()
-        for (i in 0 until size) {
-            val drawable = when (i % 3) {
-                0 -> R.drawable.ic_android
-                1 -> R.drawable.ic_audio
-                else -> R.drawable.ic_sun
-            }
+
             for(x in heroList[0].data.results.indices) {
                 val item = MarvelItem(
-                    drawable,
                     heroList[0].data.results[x].name,
-                    heroList[0].data.results[x].description
+                    heroList[0].data.results[x].thumbnail.path,
+                    heroList[0].data.results[x].thumbnail.extension
                 )
                 list += item
             }
+        return list
 
         }
-        return list
     }
 
-}
+

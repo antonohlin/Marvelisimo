@@ -1,5 +1,8 @@
 package com.example.marvelisimo
 
+import android.content.Context
+import com.squareup.picasso.OkHttp3Downloader
+import com.squareup.picasso.Picasso
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
@@ -7,6 +10,7 @@ import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
 import java.security.MessageDigest
 import java.security.NoSuchAlgorithmException
+
 
 object MarvelRetrofit {
     private const val LOG = false
@@ -56,7 +60,7 @@ object MarvelRetrofit {
 
                 val url = originalHttpUrl.newBuilder()
                     .addQueryParameter("apikey", PUBLIC_KEY)
-                    .addQueryParameter("ts",timestamp)
+                    .addQueryParameter("ts", timestamp)
                     .addQueryParameter("hash", hash)
                     .build()
 
@@ -67,6 +71,8 @@ object MarvelRetrofit {
                 chain.proceed(request)
             }
             .addInterceptor(logging)
-        return builder.build()
+            return builder.build()
+        }
+
+
     }
-}

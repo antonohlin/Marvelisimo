@@ -10,17 +10,17 @@
         android:padding="8dp">
 
         <ImageView
-            android:id="@+id/image_view"
+            android:id="@+id/character_thumbnail"
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:layout_marginEnd="8dp"
             android:src="@drawable/ic_android" />
 
         <TextView
-            android:id="@+id/text_view_1"
+            android:id="@+id/character_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_toEndOf="@+id/image_view"
+            android:layout_toEndOf="@+id/character_thumbnail"
             android:text="Line 1"
             android:textColor="@android:color/black"
             android:textSize="18sp" />
@@ -30,8 +30,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Line 2"
-            android:layout_below="@+id/text_view_1"
-            android:layout_toEndOf="@+id/image_view" />
+            android:layout_below="@+id/character_title"
+            android:layout_toEndOf="@+id/character_thumbnail" />
     </RelativeLayout>
 
 </androidx.cardview.widget.CardView>

@@ -1,3 +1,7 @@
 package com.example.marvelisimo
 
-data class MarvelItem(val imageResource: Int, val text1: String, val text2: String)
+data class MarvelItem(
+    val characterName: String,
+    val imageUrl: String,
+    val extension: String
+)
