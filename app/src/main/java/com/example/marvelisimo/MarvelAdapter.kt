@@ -5,8 +5,8 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
-import androidx.appcompat.view.menu.MenuView
 import androidx.recyclerview.widget.RecyclerView
+import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.marvel_item.view.*
 
 class MarvelAdapter(private val marvelList: List<MarvelItem>) :
@@ -22,9 +22,11 @@ class MarvelAdapter(private val marvelList: List<MarvelItem>) :
 
     override fun onBindViewHolder(holder: MarvelViewHolder, position: Int) {
         val currentItem = marvelList[position]
-        holder.imageView.setImageResource(currentItem.imageResource)
-        holder.textView1.text = currentItem.text1
-        holder.textView2.text = currentItem.text2
+        val url = changeUrl(currentItem)
+
+
+        Picasso.get().load(url).into(holder.characterThumbnail)
+        holder.characterTitle.text = currentItem.characterName
     }
 
     override fun getItemCount(): Int {
@@ -32,8 +34,12 @@ class MarvelAdapter(private val marvelList: List<MarvelItem>) :
     }
 
     class MarvelViewHolder(ItemView: View) : RecyclerView.ViewHolder(ItemView) {
-        val imageView: ImageView = itemView.image_view
-        val textView1: TextView = itemView.text_view_1
-        val textView2: TextView = itemView.text_view_2
+        val characterThumbnail: ImageView = itemView.character_thumbnail
+        val characterTitle: TextView = itemView.character_title
+    }
+
+    fun changeUrl(item: MarvelItem): String{
+        val url = item.imageUrl.replace("http", "https")+"."+item.extension
+        return url
     }
 }
