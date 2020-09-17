@@ -27,6 +27,7 @@ class MarvelAdapter(private val marvelList: List<MarvelItem>) :
         val url = changeUrl(currentItem)
 
         Picasso.get().load(url).into(holder.characterThumbnail)
+        Picasso.get().load(url).into(holder.characterThumbnail2)
         holder.characterTitle.text = currentItem.characterName
     }
 
@@ -36,6 +37,7 @@ class MarvelAdapter(private val marvelList: List<MarvelItem>) :
 
     class MarvelViewHolder(ItemView: View) : RecyclerView.ViewHolder(ItemView) {
         val characterThumbnail: ImageView = itemView.character_thumbnail
+        val characterThumbnail2: ImageView = itemView.character_thumbnail2
         val characterTitle: TextView = itemView.character_title
     }
 
