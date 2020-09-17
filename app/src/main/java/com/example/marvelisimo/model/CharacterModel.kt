@@ -1,4 +1,4 @@
-package com.example.marvelisimo
+package com.example.marvelisimo.model
 
 
 data class CharacterDataWrapper(

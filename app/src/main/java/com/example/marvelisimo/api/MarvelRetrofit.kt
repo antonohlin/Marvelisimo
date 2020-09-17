@@ -1,4 +1,4 @@
-package com.example.marvelisimo
+package com.example.marvelisimo.api
 
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor

@@ -1,5 +1,6 @@
-package com.example.marvelisimo
+package com.example.marvelisimo.api
 
+import com.example.marvelisimo.model.CharacterDataWrapper
 import io.reactivex.Single
 import retrofit2.http.GET
 import retrofit2.http.Query
