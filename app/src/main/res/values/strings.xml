@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">Marvelisimo</string>
+    <string name="marvelisimo">startButton_text</string>
 </resources>
