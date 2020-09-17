@@ -23,7 +23,7 @@ class CharacterList : AppCompatActivity() {
 
         val heroList = mutableListOf<CharacterDataWrapper>()
 
-        MarvelRetrofit.marvelService.getAllCharacters(limit = 20)
+        MarvelRetrofit.marvelService.getAllCharacters(limit = 100)
             .subscribeOn(Schedulers.newThread())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe { result, err ->
@@ -34,14 +34,14 @@ class CharacterList : AppCompatActivity() {
                     //println(heroList.size)
                 }
 
-                val exampleList = generateCharacterList(heroList.size, heroList)
+                val exampleList = generateCharacterList(heroList)
                 recycler_view.adapter = MarvelAdapter(exampleList)
                 recycler_view.layoutManager = LinearLayoutManager(this)
                 recycler_view.setHasFixedSize(true)
             }
     }
 
-    private fun generateCharacterList(size: Int, heroList: List<CharacterDataWrapper>): List<MarvelItem> {
+    private fun generateCharacterList(heroList: List<CharacterDataWrapper>): List<MarvelItem> {
 
         val list = ArrayList<MarvelItem>()
 
