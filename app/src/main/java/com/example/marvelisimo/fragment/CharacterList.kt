@@ -39,10 +39,11 @@ class CharacterList : AppCompatActivity() {
                     //println(heroList.size)
                 }
 
-                val exampleList = generateCharacterList(heroList)
+                val characterList = generateCharacterList(heroList)
+
                 recycler_view.layoutManager = LinearLayoutManager(this)
                 recycler_view.setHasFixedSize(true)
-                recycler_view.adapter = MarvelAdapter(this, exampleList) {
+                recycler_view.adapter = MarvelAdapter(this, characterList) {
                     val intent = Intent(this, DetailView::class.java)
                     intent.putExtra(INTENT_PARCELABLE, it)
                     startActivity(intent)
@@ -50,21 +51,19 @@ class CharacterList : AppCompatActivity() {
             }
     }
 
+    private fun generateCharacterList(heroList: List<CharacterDataWrapper>): List<MarvelItem> {
 
+        val list = ArrayList<MarvelItem>()
 
-                private fun generateCharacterList(heroList: List<CharacterDataWrapper>): List<MarvelItem> {
-
-                    val list = ArrayList<MarvelItem>()
-
-                    for (x in heroList[0].data.results.indices) {
-                        val item = MarvelItem(
-                            heroList[0].data.results[x].name,
-                            heroList[0].data.results[x].thumbnail.path,
-                            heroList[0].data.results[x].thumbnail.extension,
-                            heroList[0].data.results[x].description
-                        )
-                        list += item
-                    }
-                    return list
-                }
-            }
+        for (x in heroList[0].data.results.indices) {
+            val item = MarvelItem(
+                heroList[0].data.results[x].name,
+                heroList[0].data.results[x].thumbnail.path,
+                heroList[0].data.results[x].thumbnail.extension,
+                heroList[0].data.results[x].description
+            )
+            list += item
+        }
+        return list
+    }
+}

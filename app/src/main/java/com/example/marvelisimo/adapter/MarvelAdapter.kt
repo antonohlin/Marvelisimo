@@ -15,7 +15,7 @@ import kotlinx.android.synthetic.main.marvel_item.view.*
 class MarvelAdapter(
     val context: Context,
     private val marvelList: List<MarvelItem>,
-    val listener:(MarvelItem) -> Unit)
+    private val listener:(MarvelItem) -> Unit)
     : RecyclerView.Adapter<MarvelAdapter.MarvelViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MarvelViewHolder {
@@ -27,12 +27,7 @@ class MarvelAdapter(
     }
 
     override fun onBindViewHolder(holder: MarvelViewHolder, position: Int) {
-        val currentItem = marvelList[position]
-        val url = changeUrl(currentItem)
-
-        Picasso.get().load(url).into(holder.characterThumbnail)
-        Picasso.get().load(url).into(holder.characterThumbnail2)
-        holder.characterTitle.text = currentItem.characterName
+        holder.bindView(marvelList[position], listener)
     }
 
     override fun getItemCount(): Int {
@@ -43,10 +38,19 @@ class MarvelAdapter(
         val characterThumbnail: ImageView = itemView.character_thumbnail
         val characterThumbnail2: ImageView = itemView.character_thumbnail2
         val characterTitle: TextView = itemView.character_title
-    }
 
-    fun changeUrl(item: MarvelItem): String{
-        val url = item.imageUrl.replace("http", "https")+"."+item.extension
-        return url
+        fun bindView(item: MarvelItem, listener: (MarvelItem) -> Unit) {
+            val url = changeUrl(item)
+
+            Picasso.get().load(url).into(characterThumbnail)
+            Picasso.get().load(url).into(characterThumbnail2)
+            characterTitle.text = item.title
+            itemView.setOnClickListener { listener(item) }
+        }
+
+        fun changeUrl(item: MarvelItem): String{
+            val url = item.imageUrl.replace("http", "https")+"."+item.extension
+            return url
+        }
     }
 }
