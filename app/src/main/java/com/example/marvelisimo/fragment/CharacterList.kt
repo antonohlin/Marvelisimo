@@ -15,6 +15,7 @@ import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.layout_character_list_.*
 
 class CharacterList : AppCompatActivity() {
+
     @SuppressLint("CheckResult")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -41,6 +42,7 @@ class CharacterList : AppCompatActivity() {
     }
 
     private fun generateCharacterList(size: Int, heroList: List<CharacterDataWrapper>): List<MarvelItem> {
+
         val list = ArrayList<MarvelItem>()
 
         for (x in heroList[0].data.results.indices) {
