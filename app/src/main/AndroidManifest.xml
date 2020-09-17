@@ -11,7 +11,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".fragment.CharacterList"></activity>
+        <activity android:name=".fragment.DetailView"></activity>
+        <activity android:name=".fragment.CharacterList" />
         <activity android:name=".fragment.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

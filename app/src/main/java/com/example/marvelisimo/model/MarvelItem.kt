@@ -1,7 +1,12 @@
 package com.example.marvelisimo.model
 
+import android.os.Parcelable
+import kotlinx.android.parcel.Parcelize
+
+@Parcelize
 data class MarvelItem(
     val characterName: String,
     val imageUrl: String,
-    val extension: String
-)
+    val extension: String,
+    val description: String
+) : Parcelable

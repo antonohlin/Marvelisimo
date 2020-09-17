@@ -1,5 +1,6 @@
 package com.example.marvelisimo.adapter
 
+import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,8 +12,11 @@ import com.example.marvelisimo.model.MarvelItem
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.marvel_item.view.*
 
-class MarvelAdapter(private val marvelList: List<MarvelItem>) :
-    RecyclerView.Adapter<MarvelAdapter.MarvelViewHolder>() {
+class MarvelAdapter(
+    val context: Context,
+    private val marvelList: List<MarvelItem>,
+    val listener:(MarvelItem) -> Unit)
+    : RecyclerView.Adapter<MarvelAdapter.MarvelViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MarvelViewHolder {
         val itemView = LayoutInflater.from(parent.context).inflate(

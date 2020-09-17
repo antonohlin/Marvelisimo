@@ -1,6 +1,7 @@
 package com.example.marvelisimo.fragment
 
 import android.annotation.SuppressLint
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -15,6 +16,10 @@ import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.layout_character_list_.*
 
 class CharacterList : AppCompatActivity() {
+
+    companion object {
+        val INTENT_PARCELABLE = "MARVEL_ITEM"
+    }
 
     @SuppressLint("CheckResult")
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -35,24 +40,31 @@ class CharacterList : AppCompatActivity() {
                 }
 
                 val exampleList = generateCharacterList(heroList)
-                recycler_view.adapter = MarvelAdapter(exampleList)
                 recycler_view.layoutManager = LinearLayoutManager(this)
                 recycler_view.setHasFixedSize(true)
+                recycler_view.adapter = MarvelAdapter(this, exampleList) {
+                    val intent = Intent(this, DetailView::class.java)
+                    intent.putExtra(INTENT_PARCELABLE, it)
+                    startActivity(intent)
+                }
             }
     }
 
-    private fun generateCharacterList(heroList: List<CharacterDataWrapper>): List<MarvelItem> {
 
-        val list = ArrayList<MarvelItem>()
 
-        for (x in heroList[0].data.results.indices) {
-            val item = MarvelItem(
-                heroList[0].data.results[x].name,
-                heroList[0].data.results[x].thumbnail.path,
-                heroList[0].data.results[x].thumbnail.extension
-            )
-            list += item
-        }
-        return list
-    }
-}
+                private fun generateCharacterList(heroList: List<CharacterDataWrapper>): List<MarvelItem> {
+
+                    val list = ArrayList<MarvelItem>()
+
+                    for (x in heroList[0].data.results.indices) {
+                        val item = MarvelItem(
+                            heroList[0].data.results[x].name,
+                            heroList[0].data.results[x].thumbnail.path,
+                            heroList[0].data.results[x].thumbnail.extension,
+                            heroList[0].data.results[x].description
+                        )
+                        list += item
+                    }
+                    return list
+                }
+            }
