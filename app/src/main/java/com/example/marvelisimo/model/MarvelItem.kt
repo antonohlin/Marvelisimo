@@ -5,7 +5,7 @@ import kotlinx.android.parcel.Parcelize
 
 @Parcelize
 data class MarvelItem(
-    val characterName: String,
+    val title: String,
     val imageUrl: String,
     val extension: String,
     val description: String

@@ -44,7 +44,7 @@ class MarvelAdapter(
 
             Picasso.get().load(url).into(characterThumbnail)
             Picasso.get().load(url).into(characterThumbnail2)
-            characterTitle.text = item.characterName
+            characterTitle.text = item.title
             itemView.setOnClickListener { listener(item) }
         }
 
