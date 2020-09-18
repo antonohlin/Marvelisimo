@@ -29,7 +29,9 @@ class MainActivity : AppCompatActivity() {
     }
 
      fun goToNextView() {
+         println("hej2")
         val intent = Intent (this, CharacterList::class.java)
+         println("hej3")
         startActivity(intent)
     }
 

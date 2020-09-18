@@ -10,6 +10,7 @@ import com.example.marvelisimo.R
 import com.example.marvelisimo.adapter.MarvelAdapter
 import com.example.marvelisimo.api.MarvelRetrofit
 import com.example.marvelisimo.model.CharacterDataWrapper
+import com.example.marvelisimo.model.ComicDataWrapper
 import com.example.marvelisimo.model.MarvelItem
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
@@ -25,7 +26,7 @@ class CharacterList : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.layout_character_list_)
-
+        println("hej")
         val heroList = mutableListOf<CharacterDataWrapper>()
 
         MarvelRetrofit.marvelService.getAllCharacters(limit = 100)
@@ -35,8 +36,8 @@ class CharacterList : AppCompatActivity() {
                 if (err?.message != null) Log.d("__", "Error getAllCharacters " + err.message)
                 else {
                     heroList.add(result)
-                    //Log.d("___", "I got a CharacterDataWrapper $result")
-                    //println(heroList.size)
+                    Log.d("___", "I got a CharacterDataWrapper $result")
+                    println(heroList.size)
                 }
 
                 val characterList = generateCharacterList(heroList)

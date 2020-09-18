@@ -1,6 +1,7 @@
 package com.example.marvelisimo.api
 
 import com.example.marvelisimo.model.CharacterDataWrapper
+import com.example.marvelisimo.model.ComicDataWrapper
 import io.reactivex.Single
 import retrofit2.http.GET
 import retrofit2.http.Query
@@ -14,4 +15,13 @@ interface MarvelService {
         @Query("limit") limit: Int? = null,
         @Query("offset") offset: Int? = null
     ): Single<CharacterDataWrapper>
+
+    @GET("comics")
+    fun getAllComics(
+        @Query("titleStartsWith") titleStartsWith: String? = null,
+        @Query("title") byExactTitle: String? = null,
+        @Query("characters") orderBy: String? = null,
+        @Query("limit") limit: Int? = null,
+        @Query("offset") offset: Int? = null
+    ): Single<ComicDataWrapper>
 }
