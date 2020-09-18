@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<androidx.appcompat.widget.Toolbar xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:id="@+id/toolbar"
+    android:background="@color/colorPrimary"
+    android:elevation="4dp"
+    android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        >
+
+        <ImageView
+            android:id="@+id/favorite_icon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:importantForAccessibility="no"
+            android:padding="8dp"
+            android:src="@drawable/ic_favorite" />
+
+        <TextView
+            android:id="@+id/character_toolbar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+
+            android:padding="8dp"
+            android:text="@string/characters"
+            android:textColor="#ffffff"
+            android:textSize="20sp"
+            android:layout_toEndOf="@+id/favorite_icon"
+            android:layout_marginStart="40dp"/>
+
+        <TextView
+            android:id="@+id/comics_toolbar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="false"
+            android:layout_alignParentBottom="false"
+            android:padding="8dp"
+            android:text="@string/comics"
+            android:textColor="#ffffff"
+            android:textSize="20sp"
+            android:layout_toEndOf="@+id/character_toolbar"/>
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_search"
+        android:importantForAccessibility="no"
+        android:padding="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_alignParentEnd="true"
+        />
+    </RelativeLayout>
+</androidx.appcompat.widget.Toolbar>
