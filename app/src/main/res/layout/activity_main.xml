@@ -10,6 +10,9 @@
     android:layout_centerVertical="true"
     android:background="@color/colorPrimary"
     tools:context=".fragment.MainActivity">
+    <include
+        android:id="@+id/toolbar"
+        layout="@layout/toolbar" />
 
     <ImageView
         android:id="@+id/marvelImage"

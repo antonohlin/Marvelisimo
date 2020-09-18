@@ -25,6 +25,7 @@ class CharacterList : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.layout_character_list_)
+        setSupportActionBar(findViewById(R.id.toolbar))
 
         val heroList = mutableListOf<CharacterDataWrapper>()
 
