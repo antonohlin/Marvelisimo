@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.marvelisimo.R
@@ -24,6 +25,11 @@ class ComicList : AppCompatActivity() {
         setContentView(R.layout.layout_character_list_)
 
         val heroList = mutableListOf<ComicDataWrapper>()
+
+        val characterToolbarLink = findViewById<TextView>(R.id.character_toolbar)
+        characterToolbarLink.setOnClickListener{
+            goToCharacters()
+        }
 
         MarvelRetrofit.marvelService.getAllComics(limit = 20)
             .subscribeOn(Schedulers.newThread())
@@ -62,5 +68,9 @@ class ComicList : AppCompatActivity() {
             list += item
         }
         return list
+    }
+    fun goToCharacters() {
+        val intent = Intent (this, CharacterList::class.java)
+        startActivity(intent)
     }
 }

@@ -5,6 +5,8 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.widget.TextView
+import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.marvelisimo.R
 import com.example.marvelisimo.adapter.MarvelAdapter
@@ -26,8 +28,11 @@ class CharacterList : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.layout_character_list_)
-
         setSupportActionBar(findViewById(R.id.toolbar))
+        val comicsToolbarLink = findViewById<TextView>(R.id.comics_toolbar)
+        comicsToolbarLink.setOnClickListener{
+           goToComics()
+        }
 
         val heroList = mutableListOf<CharacterDataWrapper>()
 
@@ -68,5 +73,9 @@ class CharacterList : AppCompatActivity() {
             list += item
         }
         return list
+    }
+    fun goToComics() {
+        val intent = Intent (this, ComicList::class.java)
+        startActivity(intent)
     }
 }
