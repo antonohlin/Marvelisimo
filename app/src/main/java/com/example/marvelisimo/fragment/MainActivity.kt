@@ -34,10 +34,8 @@ class MainActivity : AppCompatActivity() {
     }
 
      fun goToNextView() {
-         println("hej2")
-        val intent = Intent (this, ComicList::class.java)
+        val intent = Intent (this, CharacterList::class.java)
          //TODO Ändrat här för att kolla att comics funkar, ändra tillbaks sen
-         println("hej3")
         startActivity(intent)
     }
 
