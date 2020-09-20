@@ -26,7 +26,9 @@ class CharacterList : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.layout_character_list_)
-        println("hej")
+
+        setSupportActionBar(findViewById(R.id.toolbar))
+
         val heroList = mutableListOf<CharacterDataWrapper>()
 
         MarvelRetrofit.marvelService.getAllCharacters(limit = 100)

@@ -12,6 +12,7 @@ class DetailView : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.layout_detail_view)
+        setSupportActionBar(findViewById(R.id.toolbar))
 
         val marvelItem = intent.getParcelableExtra<MarvelItem>(CharacterList.INTENT_PARCELABLE)
         val url = changeUrl(marvelItem)

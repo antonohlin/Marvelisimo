@@ -1,8 +1,10 @@
 <resources>
-    <string name="app_name">Marvelisimo</string>
+    <string name="app_name"></string>
     <string name="marvelisimo">startButton_text</string>
     <string name="line_1">Line 1</string>
     <string name="detail_image_description">Bigger image of marvel item</string>
     <string name="detail_description">Marvel description</string>
     <string name="detail_title">Title</string>
+    <string name="characters">Characters</string>
+    <string name="comics">Comics</string>
 </resources>
