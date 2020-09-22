@@ -31,7 +31,7 @@ class ComicList : AppCompatActivity() {
             goToCharacters()
         }
 
-        MarvelRetrofit.marvelService.getAllComics(limit = 20)
+        MarvelRetrofit.marvelService.getAllComics(limit = 100)
             .subscribeOn(Schedulers.newThread())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe { result, err ->
