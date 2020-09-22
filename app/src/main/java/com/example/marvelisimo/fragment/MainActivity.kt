@@ -33,7 +33,6 @@ class MainActivity : AppCompatActivity() {
 
      fun goToNextView() {
         val intent = Intent (this, CharacterList::class.java)
-         //TODO Ändrat här för att kolla att comics funkar, ändra tillbaks sen
         startActivity(intent)
     }
 
