@@ -74,6 +74,10 @@ class CharacterList : AppCompatActivity() {
         }
         return list
     }
+
+    fun searchCharacter(searchValue : String){
+
+    }
     fun goToComics() {
         val intent = Intent (this, ComicList::class.java)
         startActivity(intent)

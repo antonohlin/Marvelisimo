@@ -43,14 +43,15 @@
             android:textColor="#ffffff"
             android:textSize="20sp"
             android:layout_toEndOf="@+id/character_toolbar"/>
-    <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:src="@drawable/ic_search"
-        android:importantForAccessibility="no"
-        android:padding="8dp"
-        android:layout_marginRight="8dp"
-        android:layout_alignParentEnd="true"
-        />
+
+        <SearchView
+            android:id="@+id/search"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_marginRight="8dp"
+            android:importantForAccessibility="no"
+            android:padding="8dp"
+            android:src="@drawable/ic_search" />
     </RelativeLayout>
 </androidx.appcompat.widget.Toolbar>
