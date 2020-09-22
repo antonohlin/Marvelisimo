@@ -4,6 +4,8 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Filter
+import android.widget.Filterable
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
@@ -15,6 +17,7 @@ import kotlinx.android.synthetic.main.marvel_item.view.*
 class MarvelAdapter(
     val context: Context,
     private val marvelList: List<MarvelItem>,
+    //private val marvelListFull: List<MarvelItem>,
     private val listener:(MarvelItem) -> Unit)
     : RecyclerView.Adapter<MarvelAdapter.MarvelViewHolder>() {
 
@@ -48,9 +51,11 @@ class MarvelAdapter(
             itemView.setOnClickListener { listener(item) }
         }
 
-        fun changeUrl(item: MarvelItem): String{
-            val url = item.imageUrl?.replace("http", "https")+"."+item.extension
+        fun changeUrl(item: MarvelItem): String {
+            val url = item.imageUrl?.replace("http", "https") + "." + item.extension
             return url
         }
+
+
     }
 }
