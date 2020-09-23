@@ -1,4 +1,4 @@
-package com.example.marvelisimo.fragment
+package com.example.marvelisimo.view
 
 import android.annotation.SuppressLint
 import android.content.Intent
@@ -10,9 +10,9 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.marvelisimo.R
 import com.example.marvelisimo.adapter.MarvelAdapter
 import com.example.marvelisimo.api.MarvelRetrofit
-import com.example.marvelisimo.model.CharacterDataWrapper
 import com.example.marvelisimo.model.ComicDataWrapper
 import com.example.marvelisimo.model.MarvelItem
+import com.example.marvelisimo.model.MarvelItemDataWrapper
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.layout_character_list_.*
@@ -24,11 +24,12 @@ class ComicList : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.layout_character_list_)
 
-        val heroList = mutableListOf<ComicDataWrapper>()
+        val heroList = mutableListOf<MarvelItemDataWrapper>()
 
         val characterToolbarLink = findViewById<TextView>(R.id.character_toolbar)
         characterToolbarLink.setOnClickListener{
             goToCharacters()
+
         }
 
         MarvelRetrofit.marvelService.getAllComics(limit = 100)

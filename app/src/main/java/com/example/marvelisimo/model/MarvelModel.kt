@@ -1,45 +1,32 @@
 package com.example.marvelisimo.model
 
-data class CharacterDataWrapper(
+import android.os.Parcelable
+import kotlinx.android.parcel.Parcelize
+
+
+data class MarvelItemDataWrapper(
     val code: Int,
     val status: String,
-    val data: CharacterDataContainer
+    val data: MarvelItemDataContainer
 )
 
-data class CharacterDataContainer(
+data class MarvelItemDataContainer(
     val total: Int,
     val count: Int,
-    val results: Array<Character>
+    val results: Array<MarvelItem>
 )
 
-data class ComicDataWrapper (
-    val code: Int,
-    val status: String,
-    val data: ComicDataContainer
-)
-
-data class ComicDataContainer (
-    val limit: Int,
-    val total: Int,
-    val count: Int,
-    val results: Array<Comic>
-)
-
-data class Character(
-    val id: Int,
-    val thumbnail: Image,
-    val name: String,
-    val description: String
-)
-
-data class Comic (
-    val id: Int,
+@Parcelize
+data class MarvelItem(
     val title: String,
-    val description: String,
-    val thumbnail: Image,
-)
+    val imageUrl: Image,
+    val extension: String,
+    val description: String?,
+) : Parcelable
+//TODO lägg till flera url till serie-bilder
 
+@Parcelize
 data class Image(
     val path:String,
     val extension:String
-)
+) : Parcelable

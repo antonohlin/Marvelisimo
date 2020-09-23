@@ -12,10 +12,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".fragment.DetailView"/>
-        <activity android:name=".fragment.CharacterList" />
-        <activity android:name=".fragment.ComicList"/>
-        <activity android:name=".fragment.MainActivity">
+        <activity android:name=".view.DetailView"/>
+        <activity android:name=".view.CharacterList" />
+        <activity android:name=".view.ComicList"/>
+        <activity android:name=".view.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />

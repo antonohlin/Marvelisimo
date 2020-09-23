@@ -52,7 +52,8 @@ class MarvelAdapter(
         }
 
         fun changeUrl(item: MarvelItem): String {
-            val url = item.imageUrl?.replace("http", "https") + "." + item.extension
+            val url = item.imageUrl.toString()
+            url.replace("http", "https") + "." + item.extension
             return url
         }
 

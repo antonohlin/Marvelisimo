@@ -1,9 +1,8 @@
-package com.example.marvelisimo.fragment
+package com.example.marvelisimo.view
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import com.example.marvelisimo.R
-import com.example.marvelisimo.fragment.CharacterList.Companion.INTENT_PARCELABLE
 import com.example.marvelisimo.model.MarvelItem
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.layout_detail_view.*
