@@ -1,60 +1,62 @@
 package com.example.marvelisimo.viewModel
 
-import android.annotation.SuppressLint
-import android.util.Log
+import android.telecom.Call
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.example.marvelisimo.api.MarvelRetrofit.marvelService
+import com.example.marvelisimo.api.MarvelRetrofit
 import com.example.marvelisimo.model.MarvelItem
 import com.example.marvelisimo.model.MarvelItemDataWrapper
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.schedulers.Schedulers
+import com.example.marvelisimo.api.BASE_URL
+import com.example.marvelisimo.api.MarvelService
+import com.example.marvelisimo.api.getOkHttpClient
+import retrofit2.Retrofit
+import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
+import retrofit2.converter.gson.GsonConverterFactory
 
 
-class CharacterViewModel : ViewModel() {
+class MarvelItemViewModel : ViewModel() {
 
-    val characters: MutableLiveData<List<MarvelItem>> by lazy {
-        MutableLiveData<List<MarvelItem>>().also {
-            loadMarvelItems()
-        }
-    }
+    val marvelItems: MutableLiveData<List<MarvelItem>> by lazy {
 
-    @SuppressLint("CheckResult")
-    fun loadMarvelItems(){
+        val service: MarvelService = Retrofit.Builder()
+                    .baseUrl(BASE_URL)
+                    .addConverterFactory(GsonConverterFactory.create())
+                    .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+                    .client(getOkHttpClient())
+                    .build()
+                    .create(MarvelService::class.java)
 
-        val list = mutableListOf<MarvelItemDataWrapper>()
+        val marvelItems = MutableLiveData<List<MarvelItem>>()
 
-        marvelService.getAllCharacters(limit = 100)
-            .subscribeOn(Schedulers.newThread())
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribe { result, err ->
-                if (err?.message != null) Log.d(
-                    "__",
-                    "Error getAllCharacters " + err.message
-                )
-                else {
-                    list.add(result)
-                    
+        //NOTE: The "enque" call enqueues the request to a background thread.
+        //Therefore we don't need to explicitly create a new threadpool or similar.
+        service.getAllCharacters(limit=100).enqueue(object : retrofit2.Callback<List<MarvelItemDataWrapper>> {
+            override fun onResponse(
+                call: retrofit2.Call<List<MarvelItemDataWrapper>>,
+                response: retrofit2.Response<List<MarvelItemDataWrapper>>
+            ) {
+                val marvelList = response.body()
+                if (marvelList != null) {
+                        marvelItems.postValue(marvelList)
+                }
             }
-    }
 
-
-    fun generateCharacterList(heroList: List<MarvelItemDataWrapper>): List<MarvelItem> {
-
-        val list = ArrayList<MarvelItem>()
-
-        for (x in heroList[0].data.results.indices) {
-            val item = heroList[0].data.results[x].description?.let {
-                MarvelItem(
-                    heroList[0].data.results[x].title,
-                    heroList[0].data.results[x].imageUrl,
-                    it,
-                    //heroList[0].data.results[x].description
-                )
+            override fun onFailure(call: retrofit2.Call<List<MarvelItem>>, t: Throwable) {
+                TODO("Not yet implemented")
             }
-            list += item
-        }
-        return list
-    }
+        })
+
+    marvelItems
+}
+
+
+
+}
+
+
+
+
+
 
 

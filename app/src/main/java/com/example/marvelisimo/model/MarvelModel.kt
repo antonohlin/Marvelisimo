@@ -1,8 +1,8 @@
 package com.example.marvelisimo.model
 
 import android.os.Parcelable
+import com.squareup.moshi.Json
 import kotlinx.android.parcel.Parcelize
-
 
 data class MarvelItemDataWrapper(
     val code: Int,
@@ -20,13 +20,13 @@ data class MarvelItemDataContainer(
 data class MarvelItem(
     val title: String,
     val imageUrl: Image,
-    val extension: String,
-    val description: String?,
+    val description: String = "",
 ) : Parcelable
+
 //TODO lägg till flera url till serie-bilder
 
 @Parcelize
 data class Image(
-    val path:String,
-    val extension:String
+    val path: String,
+    val extension: String
 ) : Parcelable

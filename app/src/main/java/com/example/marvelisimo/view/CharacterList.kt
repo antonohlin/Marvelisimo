@@ -8,24 +8,9 @@ import android.net.NetworkCapabilities
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
-import android.view.LayoutInflater
-import android.view.View
-import android.view.View.VISIBLE
-import android.view.ViewGroup
 import android.widget.TextView
-import androidx.activity.viewModels
-import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
-import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.marvelisimo.R
-import com.example.marvelisimo.adapter.MarvelAdapter
-import com.example.marvelisimo.api.MarvelRetrofit
-import com.example.marvelisimo.model.CharacterDataWrapper
-import com.example.marvelisimo.model.MarvelItem
-import com.example.marvelisimo.viewModel.CharacterViewModel
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.schedulers.Schedulers
-import kotlinx.android.synthetic.main.layout_character_list_.*
+
 
 class CharacterList : AppCompatActivity() {
 
@@ -41,11 +26,11 @@ class CharacterList : AppCompatActivity() {
 
         val comicsToolbarLink = findViewById<TextView>(R.id.comics_toolbar)
 
-        val model: CharacterViewModel by viewModels()
-
-        model.characters.observe(this, Observer<List<Character>> { characters ->
-            MarvelAdapter.
-        })
+//        val model: CharacterViewModel by viewModels()
+//
+//        model.characters.observe(this, Observer<List<Character>> { characters ->
+//            MarvelAdapter. //TODO ändra recycleVIewn
+//        })
 
         comicsToolbarLink.setOnClickListener {
             goToComics()
