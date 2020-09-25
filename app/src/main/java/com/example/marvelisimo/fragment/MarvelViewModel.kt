@@ -14,6 +14,15 @@ import io.reactivex.schedulers.Schedulers
 
 class MarvelViewModel : ViewModel() {
 
+    init {
+        Log.i("Viewmodel","called")
+    }
+
+    override fun onCleared() {
+        super.onCleared()
+        Log.i("ViewModel", "destroyed!")
+    }
+
     @SuppressLint("CheckResult")
     fun callMarvelObjects(): LiveData<ComicDataWrapper> {
         val resultList = MutableLiveData<ComicDataWrapper>()

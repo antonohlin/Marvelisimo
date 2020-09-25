@@ -6,6 +6,7 @@ import android.util.Log
 import android.widget.TextView
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.marvelisimo.R
 import com.example.marvelisimo.adapter.MarvelAdapter
 import com.example.marvelisimo.model.MarvelItem
@@ -26,7 +27,10 @@ class ComicList : AppCompatActivity() {
             val comicList = it.data.results.map { comic ->
                 MarvelItem(comic.title, comic.thumbnail.path, comic.thumbnail.extension)
             }
+            Log.i("viewmodel", "observed")
             Log.i("comiclist", comicList.toString())
+            recycler_view.layoutManager = LinearLayoutManager(this)
+            recycler_view.setHasFixedSize(true)
             recycler_view.adapter = MarvelAdapter(this, comicList) {
                 val intent = Intent(this, DetailView::class.java)
                 intent.putExtra(CharacterList.INTENT_PARCELABLE, it)
@@ -35,7 +39,7 @@ class ComicList : AppCompatActivity() {
         })
     }
 
-    fun goToCharacters() {
+    private fun goToCharacters() {
         val intent = Intent(this, CharacterList::class.java)
         startActivity(intent)
     }
