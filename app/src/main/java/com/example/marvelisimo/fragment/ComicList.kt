@@ -1,22 +1,21 @@
 package com.example.marvelisimo.fragment
 
-import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.widget.TextView
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.marvelisimo.R
 import com.example.marvelisimo.adapter.MarvelAdapter
-import com.example.marvelisimo.api.MarvelRetrofit
-import com.example.marvelisimo.model.CharacterDataWrapper
 import com.example.marvelisimo.model.ComicDataWrapper
 import com.example.marvelisimo.model.MarvelItem
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.layout_character_list_.*
+import kotlinx.android.synthetic.main.toolbar.*
 
 class ComicList : AppCompatActivity() {
 
@@ -28,16 +27,32 @@ class ComicList : AppCompatActivity() {
             goToCharacters()
         }
 
-        val viewModel = ViewModelProvider(this,ViewModelProvider.NewInstanceFactory()).get(MarvelViewModel::class.java)
-        viewModel.callMarvelObjects()
+        val viewModel:MarvelViewModel by viewModels()
+        val comicList = generateComicList(viewModel.callMarvelObjects())
+
+        viewModel.callMarvelObjects().observe(this, Observer { it. })
 
         recycler_view.layoutManager = LinearLayoutManager(this)
         recycler_view.setHasFixedSize(true)
-        recycler_view.adapter = MarvelAdapter(this,viewModel.comicList) {
+        recycler_view.adapter = MarvelAdapter(this, comicList) {
             val intent = Intent(this, DetailView::class.java)
             intent.putExtra(CharacterList.INTENT_PARCELABLE, it)
             startActivity(intent)
         }
+    }
+    fun generateComicList(heroList: MutableLiveData<List<ComicDataWrapper>>): List<MarvelItem> {
+
+        val list = ArrayList<MarvelItem>()
+        for (x in heroList[0].data.results.indices) {
+            val item = MarvelItem(
+                heroList[0].data.results[x].title,
+                heroList[0].data.results[x].thumbnail.path,
+                heroList[0].data.results[x].thumbnail.extension,
+                //heroList[0].data.results[x].description
+            )
+            list += item
+        }
+        return list
     }
 
     fun goToCharacters() {
