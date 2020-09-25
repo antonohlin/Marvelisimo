@@ -23,5 +23,5 @@ interface MarvelService {
         @Query("characters") orderBy: String? = null,
         @Query("limit") limit: Int? = null,
         @Query("offset") offset: Int? = null
-    ): Single<List<ComicDataWrapper>>
+    ): Single<ComicDataWrapper>
 }

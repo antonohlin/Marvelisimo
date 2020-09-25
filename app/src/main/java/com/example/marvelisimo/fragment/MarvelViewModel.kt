@@ -2,6 +2,7 @@ package com.example.marvelisimo.fragment
 
 import android.annotation.SuppressLint
 import android.util.Log
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.marvelisimo.api.MarvelRetrofit
@@ -14,8 +15,8 @@ import io.reactivex.schedulers.Schedulers
 class MarvelViewModel : ViewModel() {
 
     @SuppressLint("CheckResult")
-    fun callMarvelObjects(): MutableLiveData<List<ComicDataWrapper>> {
-        val resultList = MutableLiveData<List<ComicDataWrapper>>()
+    fun callMarvelObjects(): LiveData<ComicDataWrapper> {
+        val resultList = MutableLiveData<ComicDataWrapper>()
         MarvelRetrofit.marvelService.getAllComics(limit = 100)
             .subscribeOn(Schedulers.newThread())
             .observeOn(AndroidSchedulers.mainThread())
