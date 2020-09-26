@@ -44,7 +44,6 @@ class MarvelAdapter(
 
         fun bindView(item: MarvelItem, listener: (MarvelItem) -> Unit) {
             val url = changeUrl(item)
-
             Picasso.get().load(url).into(characterThumbnail)
             Picasso.get().load(url).into(characterThumbnail2)
             characterTitle.text = item.title

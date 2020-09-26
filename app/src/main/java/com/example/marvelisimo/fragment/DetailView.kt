@@ -14,7 +14,7 @@ class DetailView : AppCompatActivity() {
         setContentView(R.layout.layout_detail_view)
         setSupportActionBar(findViewById(R.id.toolbar))
 
-        val marvelItem = intent.getParcelableExtra<MarvelItem>(CharacterList.INTENT_PARCELABLE)
+        val marvelItem = intent.getParcelableExtra<MarvelItem>(INTENT_PARCELABLE)
         val url = changeUrl(marvelItem)
 
         Picasso.get().load(url).into(detail_image)
