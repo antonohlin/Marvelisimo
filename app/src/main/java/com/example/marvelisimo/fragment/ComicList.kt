@@ -3,6 +3,7 @@ package com.example.marvelisimo.fragment
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import android.view.View
 import android.widget.TextView
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
@@ -21,24 +22,29 @@ class ComicList : AppCompatActivity() {
         characterToolbarLink.setOnClickListener {
             goToCharacters()
         }
+        val fp = FunctionProvider()
 
-        val viewModel: MarvelViewModel by viewModels()
-        viewModel.callMarvelObjects().observe(this, {
-            val comicList = it.data.results.map { comic ->
-                MarvelItem(comic.title, comic.thumbnail.path, comic.thumbnail.extension)
-            }
-            Log.i("viewmodel", "observed")
-            Log.i("comiclist", comicList.toString())
-            recycler_view.layoutManager = LinearLayoutManager(this)
-            recycler_view.setHasFixedSize(true)
-            recycler_view.adapter = MarvelAdapter(this, comicList) {
-                val intent = Intent(this, DetailView::class.java)
-                intent.putExtra(CharacterList.INTENT_PARCELABLE, it)
-                startActivity(intent)
-            }
-        })
+        if (fp.isOnline(this)) {
+            val viewModel: MarvelViewModel by viewModels()
+            viewModel.callComics().observe(this, {
+                val comicList = it.data.results.map { comic ->
+                    MarvelItem(comic.title, comic.thumbnail.path, comic.thumbnail.extension)
+                }
+                Log.i("viewmodel", "observed")
+                Log.i("comiclist", comicList.toString())
+                recycler_view.layoutManager = LinearLayoutManager(this)
+                recycler_view.setHasFixedSize(true)
+                recycler_view.adapter = MarvelAdapter(this, comicList) {
+                    val intent = Intent(this, DetailView::class.java)
+                    intent.putExtra(CharacterList.INTENT_PARCELABLE, it)
+                    startActivity(intent)
+                }
+            })
+        } else {
+            println("No internet lol")
+            findViewById<TextView>(R.id.no_connection).visibility = View.VISIBLE
+        }
     }
-
     private fun goToCharacters() {
         val intent = Intent(this, CharacterList::class.java)
         startActivity(intent)
