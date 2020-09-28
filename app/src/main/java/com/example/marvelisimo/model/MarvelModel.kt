@@ -29,7 +29,8 @@ data class Character(
     val id: Int,
     val thumbnail: Image,
     val name: String,
-    val description: String
+    val description: String,
+    val resourceURI: String
 )
 
 data class Comic (
@@ -37,6 +38,7 @@ data class Comic (
     val title: String,
     val description: String,
     val thumbnail: Image,
+    val resourceURI: String
 )
 
 data class Image(

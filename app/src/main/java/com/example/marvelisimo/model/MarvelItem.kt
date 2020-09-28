@@ -8,5 +8,6 @@ data class MarvelItem(
     val title: String,
     val imageUrl: String,
     val extension: String,
-    //val description: String,
+    val description: String?,
+    val url: String?
 ) : Parcelable
