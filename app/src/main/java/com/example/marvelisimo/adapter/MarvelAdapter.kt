@@ -43,16 +43,10 @@ class MarvelAdapter(
         val characterTitle: TextView = itemView.character_title
 
         fun bindView(item: MarvelItem, listener: (MarvelItem) -> Unit) {
-            val url = changeUrl(item)
-            Picasso.get().load(url).into(characterThumbnail)
-            Picasso.get().load(url).into(characterThumbnail2)
+            Picasso.get().load(item.imageUrl).into(characterThumbnail)
+            Picasso.get().load(item.imageUrl).into(characterThumbnail2)
             characterTitle.text = item.title
             itemView.setOnClickListener { listener(item) }
-        }
-
-        fun changeUrl(item: MarvelItem): String {
-            val url = item.imageUrl?.replace("http", "https") + "." + item.extension
-            return url
         }
 
 

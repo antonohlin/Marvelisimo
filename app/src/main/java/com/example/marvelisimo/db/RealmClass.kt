@@ -5,28 +5,23 @@ import io.realm.RealmObject
 import io.realm.annotations.PrimaryKey
 import io.realm.kotlin.createObject
 import io.realm.kotlin.where
+import java.util.*
 
 // Define your model classes by extending RealmObject.
 // You must annotate all classes with `open`.
-open class RealmCharacter(
-    // You can put properties in the constructor as long as
-    // all of them are initialized with default values. This
-    // ensures that an empty constructor is generated.
-    // All properties are by default persisted.
-    // Non-nullable properties must be initialized
-    // with non-null values.
+open class RealmMarvelItem(
+    @PrimaryKey var id: String = UUID.randomUUID().toString(),
     var name: String = "",
     var description: String = "",
-    var imageUrl: String = ""
-): RealmObject()
+    var imageUrlBase: String = "",
+    var extension: String = "",
+    var url: String = ""
+): RealmObject() {
 
-open class RealComic(
-    // Properties can be annotated with PrimaryKey or Index.
-    @PrimaryKey var id: Long = 0,
-    var name: String = "",
-    var description: String = "",
-    var imageUrl: String = ""   //TODO gör så att url kommer in som en sträng eller ha image-klass
-): RealmObject()
+    val imageUrl:String
+        get()=imageUrlBase+"."+extension
+
+}
 
 //open class Image(
 //    // Properties can be annotated with PrimaryKey or Index.

@@ -15,22 +15,27 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.marvelisimo.R
 import com.example.marvelisimo.adapter.MarvelAdapter
 import com.example.marvelisimo.model.MarvelItem
+import com.example.marvelisimo.viewmodel.MarvelViewModel
 import kotlinx.android.synthetic.main.layout_character_list_.*
 
 class ComicList : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
+
         super.onCreate(savedInstanceState)
         setContentView(R.layout.layout_character_list_)
+
         val characterToolbarLink = findViewById<TextView>(R.id.character_toolbar)
         val confirmSearch = findViewById<Button>(R.id.confirmSearchButton)
         val searchToolbarLink = findViewById<ImageView>(R.id.search)
         val searchField = findViewById<EditText>(R.id.SearchCharacterComic)
         val imm = getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
         val viewModel: MarvelViewModel by viewModels()
+
         characterToolbarLink.setOnClickListener {
             goToCharacters()
         }
+
         searchToolbarLink.setOnClickListener {
             searchField.visibility = View.VISIBLE
             searchField.hint = "Search comics"
@@ -81,6 +86,7 @@ class ComicList : AppCompatActivity() {
             findViewById<TextView>(R.id.no_connection).visibility = View.VISIBLE
         }
     }
+
     private fun goToCharacters() {
         val intent = Intent(this, CharacterList::class.java)
         startActivity(intent)

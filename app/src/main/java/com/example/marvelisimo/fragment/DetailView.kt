@@ -5,8 +5,11 @@ import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.widget.ImageView
 import android.widget.TextView
+import android.widget.Toast
 import com.example.marvelisimo.R
+import com.example.marvelisimo.db.DbHelper
 import com.example.marvelisimo.fragment.CharacterList.Companion.INTENT_PARCELABLE
 import com.example.marvelisimo.model.MarvelItem
 import com.squareup.picasso.Picasso
@@ -17,24 +20,32 @@ class DetailView : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.layout_detail_view)
         setSupportActionBar(findViewById(R.id.toolbar))
-        val marvelItem = intent.getParcelableExtra<MarvelItem>(INTENT_PARCELABLE)
-        val url = changeUrl(marvelItem)
 
-        Picasso.get().load(url).into(detail_image)
+        val marvelItem = intent.getParcelableExtra<MarvelItem>(INTENT_PARCELABLE)
+        val favorite = findViewById<ImageView>(R.id.favorite)
+        val db = DbHelper()
+        favorite.setOnClickListener {
+            db.saveToDb(marvelItem)
+            Log.i("Favorite", marvelItem.title + marvelItem.imageUrl + marvelItem.imageUrlBase)
+            Toast.makeText(this, "Favorit", Toast.LENGTH_SHORT).show()
+        }
+
+        Picasso.get().load(marvelItem.imageUrl).into(detail_image)
         detail_title.text = marvelItem.title
         description.text = marvelItem.description
         Log.i("url", marvelItem.url)
+
         val descriptionUrl = marvelItem.url
         val i = Intent(Intent.ACTION_VIEW)
-        findViewById<TextView>(R.id.moreInfoUrl).setOnClickListener(){
+        findViewById<TextView>(R.id.moreInfoUrl).setOnClickListener() {
             i.data = Uri.parse(descriptionUrl)
             startActivity(i)
         }
 
-
     }
+//        fun changeUrl(item: MarvelItem): String {
+//            return item.imageUrl + "." + item.extension
+//        }
 
-    fun changeUrl(item: MarvelItem): String{
-        return item.imageUrl+"."+item.extension
-    }
+
 }

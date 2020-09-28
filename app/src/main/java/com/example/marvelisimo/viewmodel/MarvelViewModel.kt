@@ -1,4 +1,4 @@
-package com.example.marvelisimo.fragment
+package com.example.marvelisimo.viewmodel
 
 import android.annotation.SuppressLint
 import android.util.Log
@@ -6,12 +6,14 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.marvelisimo.api.MarvelRetrofit
+import com.example.marvelisimo.db.RealmMarvelItem
 import com.example.marvelisimo.model.CharacterDataWrapper
 import com.example.marvelisimo.model.ComicDataWrapper
 import com.example.marvelisimo.model.MarvelItem
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
-
+import io.realm.Realm
+import io.realm.kotlin.where
 
 class MarvelViewModel : ViewModel() {
 
@@ -87,4 +89,35 @@ class MarvelViewModel : ViewModel() {
         return resultList
     }
 
-}
+    fun loadFavorites(): List<MarvelItem> {
+        val realm = Realm.getDefaultInstance()
+        val favoritesResult = realm.where<RealmMarvelItem>().findAll()
+        Log.i("favoriteRes", favoritesResult.toString())
+
+        val marvelFavorites = favoritesResult.map { realmChar ->
+            MarvelItem(realmChar.name, realmChar.imageUrlBase, "jpg", "", "")
+
+        }
+        Log.i("favoriteRes2", marvelFavorites.toString())
+
+        return marvelFavorites
+    }
+
+
+
+//
+//    fun saveToDbCharacter(marvelItem: MarvelItem) {
+//        val realm = io.realm.Realm.getDefaultInstance()
+//        val marvelItemToDb = RealmCharacter()
+//
+//        marvelItemToDb.id = (0..10000000).random()
+//        marvelItemToDb.name = marvelItem.title
+//        marvelItemToDb.imageUrl = marvelItem.imageUrl
+//
+//        realm.beginTransaction()
+//        realm.copyToRealm(marvelItemToDb)
+//        realm.commitTransaction()
+
+    }
+
+
