@@ -102,6 +102,7 @@ class MarvelViewModel : ViewModel() {
         realm.commitTransaction()
 
     }
+
 //
 //    fun saveToDbCharacter(marvelItem: MarvelItem) {
 //        val realm = io.realm.Realm.getDefaultInstance()
