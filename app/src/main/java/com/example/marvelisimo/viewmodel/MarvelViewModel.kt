@@ -95,7 +95,7 @@ class MarvelViewModel : ViewModel() {
         Log.i("favoriteRes", favoritesResult.toString())
 
         val marvelFavorites = favoritesResult.map { realmChar ->
-            MarvelItem(realmChar.name, realmChar.imageUrlBase, "jpg", "", "")
+            MarvelItem(realmChar.id, realmChar.name, realmChar.imageUrlBase, "jpg", "", "")
 
         }
         Log.i("favoriteRes2", marvelFavorites.toString())

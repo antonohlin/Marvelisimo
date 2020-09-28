@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import android.view.View
 import android.view.View.GONE
 import android.view.View.VISIBLE
 import android.view.inputmethod.InputMethodManager
@@ -29,6 +30,7 @@ class CharacterList : AppCompatActivity() {
         setContentView(R.layout.layout_character_list_)
         setSupportActionBar(findViewById(R.id.toolbar))
 
+        val noFavorites: TextView = findViewById<TextView>(R.id.no_favorites)
         val favorite = findViewById<ImageView>(R.id.favorite_icon)
         val comicsToolbarLink = findViewById<TextView>(R.id.comics_toolbar)
         val confirmSearch = findViewById<Button>(R.id.confirmSearchButton)
@@ -39,7 +41,11 @@ class CharacterList : AppCompatActivity() {
 
         favorite.setOnClickListener{
             val favorites = viewModel.loadFavorites()
-            Log.i("charListFavs", favorites.toString())
+
+            if (favorites.isEmpty()){
+                noFavorites.visibility = TextView.VISIBLE
+            }
+
             recycler_view.layoutManager = LinearLayoutManager(this)
             recycler_view.setHasFixedSize(true)
             recycler_view.adapter = MarvelAdapter(this, favorites) {
