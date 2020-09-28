@@ -71,5 +71,20 @@ class MarvelViewModel : ViewModel() {
             }
         return resultList
     }
+    @SuppressLint("CheckResult")
+    fun searchComics(searchValue: String): LiveData<ComicDataWrapper> {
+        val resultList = MutableLiveData<ComicDataWrapper>()
+        MarvelRetrofit.marvelService.getAllComics(titleStartsWith = searchValue,limit = 100)
+            .subscribeOn(Schedulers.newThread())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe { result, err ->
+                if (err?.message != null) Log.d("__", "Error getAllCharacters " + err.message)
+                else {
+                    resultList.postValue(result)
+                    Log.d("___", "I got a ComicDataWrapper $result")
+                }
+            }
+        return resultList
+    }
 
 }

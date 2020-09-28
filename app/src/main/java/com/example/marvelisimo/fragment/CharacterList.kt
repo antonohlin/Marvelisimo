@@ -45,11 +45,6 @@ class CharacterList : AppCompatActivity() {
         }
 
         confirmSearch.setOnClickListener {
-            Toast.makeText(
-                this,
-                findViewById<EditText>(R.id.SearchCharacterComic).text,
-                Toast.LENGTH_SHORT
-            ).show()
             searchField.visibility = GONE
             confirmSearch.visibility = GONE
             val searchValue = searchField.text.toString()
