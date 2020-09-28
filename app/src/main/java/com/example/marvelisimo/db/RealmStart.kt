@@ -4,7 +4,7 @@ import android.app.Application
 import io.realm.Realm
 import io.realm.RealmConfiguration
 
-class Realm : Application() {
+class RealmStart : Application() {
 
     override fun onCreate() {
         super.onCreate()
@@ -20,5 +20,3 @@ class Realm : Application() {
 
 }
 
-// Queries
-//val results = realm.where<EnumTest>().equalTo("strField", MyEnum.Value1.name).findAll()

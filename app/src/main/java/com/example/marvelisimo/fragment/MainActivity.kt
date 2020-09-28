@@ -7,6 +7,7 @@ import android.view.View
 import android.view.animation.AnimationUtils
 import androidx.appcompat.app.AppCompatActivity
 import com.example.marvelisimo.R
+import com.example.marvelisimo.db.RealmStart
 import io.realm.Realm
 import kotlinx.android.synthetic.main.activity_main.*
 
@@ -17,7 +18,10 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
         start_button.setOnClickListener { v -> fade() }
 
-        Realm.init(this)
+    }
+
+    init{
+        RealmStart()
     }
 
     private fun fade() {
