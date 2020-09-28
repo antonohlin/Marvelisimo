@@ -9,9 +9,9 @@ import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.view.View.GONE
 import android.view.View.VISIBLE
-import android.widget.TextView
-import android.widget.Toast
+import android.widget.*
 import androidx.activity.viewModels
 import androidx.annotation.RequiresApi
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -37,9 +37,23 @@ class CharacterList : AppCompatActivity() {
         setContentView(R.layout.layout_character_list_)
         setSupportActionBar(findViewById(R.id.toolbar))
         val comicsToolbarLink = findViewById<TextView>(R.id.comics_toolbar)
+        val confirmSearch = findViewById<Button>(R.id.confirmSearchButton)
+        val searchToolbarLink = findViewById<ImageView>(R.id.search)
+        val searchField = findViewById<EditText>(R.id.SearchCharacterComic)
         comicsToolbarLink.setOnClickListener {
             goToComics()
         }
+        searchToolbarLink.setOnClickListener {
+            searchField.visibility = VISIBLE
+            confirmSearch.visibility = VISIBLE
+        }
+
+        confirmSearch.setOnClickListener {
+            Toast.makeText(this,findViewById<EditText>(R.id.SearchCharacterComic).text   ,Toast.LENGTH_SHORT).show()
+            searchField.visibility = GONE
+            confirmSearch.visibility = GONE
+        }
+
         val fp = FunctionProvider()
 
         if (fp.isOnline(this)) {

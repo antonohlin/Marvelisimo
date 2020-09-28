@@ -9,4 +9,5 @@
     <string name="comics">Comics</string>
     <string name="no_connection">No internet connection</string>
     <string name="description">Description of object</string>
+    <string name="search_bar">Search</string>
 </resources>
