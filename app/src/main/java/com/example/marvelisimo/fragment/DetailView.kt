@@ -7,8 +7,6 @@ import android.os.Bundle
 import android.util.Log
 import android.widget.TextView
 import com.example.marvelisimo.R
-import com.example.marvelisimo.api.MarvelRetrofit
-import com.example.marvelisimo.api.MarvelRetrofit.md5
 import com.example.marvelisimo.fragment.CharacterList.Companion.INTENT_PARCELABLE
 import com.example.marvelisimo.model.MarvelItem
 import com.squareup.picasso.Picasso
@@ -37,7 +35,6 @@ class DetailView : AppCompatActivity() {
     }
 
     fun changeUrl(item: MarvelItem): String{
-        val url = item.imageUrl.replace("http", "https")+"."+item.extension
-        return url
+        return item.imageUrl+"."+item.extension
     }
 }
