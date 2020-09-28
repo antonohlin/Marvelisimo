@@ -6,8 +6,14 @@ import kotlinx.android.parcel.Parcelize
 @Parcelize
 data class MarvelItem(
     val title: String,
-    val imageUrl: String,
+    val imageUrlBase: String,
     val extension: String,
     val description: String?,
     val url: String?
-) : Parcelable
+) : Parcelable {
+
+    val imageUrl:String
+        get()=imageUrlBase+"."+extension
+
+}
+

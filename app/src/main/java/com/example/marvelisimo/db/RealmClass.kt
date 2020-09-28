@@ -13,7 +13,9 @@ open class RealmMarvelItem(
     @PrimaryKey var id: String = UUID.randomUUID().toString(),
     var name: String = "",
     var description: String = "",
-    var imageUrl: String = ""
+    var imageUrl: String = "",
+    var extension: String = "",
+    var url: String = ""
 ): RealmObject()
 
 //open class Image(

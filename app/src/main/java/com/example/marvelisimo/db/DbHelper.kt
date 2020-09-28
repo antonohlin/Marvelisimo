@@ -8,11 +8,11 @@ class DbHelper (
     val realm: Realm = Realm.getDefaultInstance()
 ) {
 
-    fun saveToDb(marvelItem: MarvelItem, url: String) {
+    fun saveToDb(marvelItem: MarvelItem) {
         val marvelItemToDb = RealmMarvelItem()
 
         marvelItemToDb.name = marvelItem.title
-        marvelItemToDb.imageUrl = url
+        marvelItemToDb.imageUrl = marvelItem.imageUrl
 
         realm.beginTransaction()
         realm.copyToRealm(marvelItemToDb)
