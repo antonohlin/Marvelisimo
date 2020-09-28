@@ -3,23 +3,25 @@
     package="com.example.marvelisimo">
 
     <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
     <application
+        android:name=".db.RealmStart"
         android:allowBackup="true"
-        android:usesCleartextTraffic="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:name=".db.RealmStart"
-        android:theme="@style/AppTheme">
-        <activity android:name=".fragment.DetailView"/>
+        android:theme="@style/AppTheme"
+        android:usesCleartextTraffic="true">
+        <activity android:name=".FavoriteList"></activity>
+        <activity android:name=".fragment.DetailView" />
         <activity android:name=".fragment.CharacterList" />
-        <activity android:name=".fragment.ComicList"/>
+        <activity android:name=".fragment.ComicList" />
         <activity android:name=".fragment.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>

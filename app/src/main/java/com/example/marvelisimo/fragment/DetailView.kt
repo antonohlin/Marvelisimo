@@ -24,6 +24,7 @@ class DetailView : AppCompatActivity() {
         val marvelItem = intent.getParcelableExtra<MarvelItem>(INTENT_PARCELABLE)
         val favorite = findViewById<ImageView>(R.id.favorite)
         val db = DbHelper()
+
         favorite.setOnClickListener {
             db.saveToDb(marvelItem)
             Log.i("Favorite", marvelItem.title + marvelItem.imageUrl + marvelItem.imageUrlBase)

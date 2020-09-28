@@ -15,9 +15,10 @@
         android:id="@+id/recycler_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_marginTop="55dp"
+        android:background="@color/colorPrimary"
         android:clipToPadding="false"
         android:padding="4dp"
-        android:layout_marginTop="55dp"
         tools:listitem="@layout/marvel_item">
 
     </androidx.recyclerview.widget.RecyclerView>
@@ -57,5 +58,19 @@
         android:layout_alignParentEnd="true"
         android:text="@string/search_bar"
         android:visibility="gone"/>
+
+    <TextView
+        android:id="@+id/no_favorites"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="76dp"
+        android:layout_marginEnd="80dp"
+        android:layout_marginBottom="495dp"
+        android:text="No Favorites Yet!"
+        android:textAppearance="@style/TextAppearance.AppCompat.Display1"
+        android:visibility="invisible" />
 
 </RelativeLayout>
