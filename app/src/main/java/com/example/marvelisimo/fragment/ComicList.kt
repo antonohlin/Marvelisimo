@@ -51,6 +51,7 @@ class ComicList : AppCompatActivity() {
                 recycler_view.layoutManager = LinearLayoutManager(this)
                 recycler_view.setHasFixedSize(true)
                 recycler_view.adapter = MarvelAdapter(this, comicList) {
+                    viewModel.saveToDbComic(it)
                     val intent = Intent(this, DetailView::class.java)
                     intent.putExtra(CharacterList.INTENT_PARCELABLE, it)
                     startActivity(intent)

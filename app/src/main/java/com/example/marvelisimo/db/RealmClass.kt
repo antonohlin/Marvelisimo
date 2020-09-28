@@ -15,6 +15,7 @@ open class RealmCharacter(
     // All properties are by default persisted.
     // Non-nullable properties must be initialized
     // with non-null values.
+    @PrimaryKey var id: Long = 0,
     var name: String = "",
     var description: String = "",
     var imageUrl: String = ""

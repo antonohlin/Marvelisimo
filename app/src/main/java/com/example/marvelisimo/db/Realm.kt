@@ -1,7 +1,6 @@
 import android.app.Application
 import io.realm.Realm
 import io.realm.RealmConfiguration
-import io.realm.RealmObject
 
 class Realm : Application() {
 
@@ -9,7 +8,8 @@ class Realm : Application() {
         super.onCreate()
 
         val configuration =
-            RealmConfiguration.Builder().schemaVersion(1).deleteRealmIfMigrationNeeded()
+            RealmConfiguration.Builder().schemaVersion(1)
+                .deleteRealmIfMigrationNeeded()
                 .name("marvelDB").build()
         Realm.setDefaultConfiguration(configuration)
     }
