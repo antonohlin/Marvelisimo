@@ -26,6 +26,7 @@ class DetailView : AppCompatActivity() {
         val db = DbHelper()
         favorite.setOnClickListener {
             db.saveToDb(marvelItem)
+            Log.i("Favorite", marvelItem.title + marvelItem.imageUrl + marvelItem.imageUrlBase)
             Toast.makeText(this, "Favorit", Toast.LENGTH_SHORT).show()
         }
 

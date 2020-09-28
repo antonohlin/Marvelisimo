@@ -39,7 +39,7 @@ class CharacterList : AppCompatActivity() {
 
         favorite.setOnClickListener{
             val favorites = viewModel.loadFavorites()
-
+            Log.i("charListFavs", favorites.toString())
             recycler_view.layoutManager = LinearLayoutManager(this)
             recycler_view.setHasFixedSize(true)
             recycler_view.adapter = MarvelAdapter(this, favorites) {

@@ -13,10 +13,15 @@ open class RealmMarvelItem(
     @PrimaryKey var id: String = UUID.randomUUID().toString(),
     var name: String = "",
     var description: String = "",
-    var imageUrl: String = "",
+    var imageUrlBase: String = "",
     var extension: String = "",
     var url: String = ""
-): RealmObject()
+): RealmObject() {
+
+    val imageUrl:String
+        get()=imageUrlBase+"."+extension
+
+}
 
 //open class Image(
 //    // Properties can be annotated with PrimaryKey or Index.
