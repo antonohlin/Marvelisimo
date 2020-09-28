@@ -7,13 +7,11 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.marvelisimo.api.MarvelRetrofit
 import com.example.marvelisimo.db.RealComic
-import com.example.marvelisimo.db.RealmCharacter
 import com.example.marvelisimo.model.CharacterDataWrapper
 import com.example.marvelisimo.model.ComicDataWrapper
 import com.example.marvelisimo.model.MarvelItem
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
-
 
 class MarvelViewModel : ViewModel() {
 
@@ -89,19 +87,6 @@ class MarvelViewModel : ViewModel() {
         return resultList
     }
 
-    fun saveToDbComic(marvelItem: MarvelItem) {
-        val realm = io.realm.Realm.getDefaultInstance()
-        val marvelItemToDb = RealComic()
-
-        marvelItemToDb.id = (0..10000000).random().toLong()
-        marvelItemToDb.name = marvelItem.title
-        marvelItemToDb.imageUrl = marvelItem.imageUrl
-
-        realm.beginTransaction()
-        realm.copyToRealm(marvelItemToDb)
-        realm.commitTransaction()
-
-    }
 
 //
 //    fun saveToDbCharacter(marvelItem: MarvelItem) {
