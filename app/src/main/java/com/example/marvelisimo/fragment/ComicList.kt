@@ -38,6 +38,7 @@ class ComicList : AppCompatActivity() {
 
         searchToolbarLink.setOnClickListener {
             searchField.visibility = View.VISIBLE
+            searchField.hint = "Search comics"
             confirmSearch.visibility = View.VISIBLE
             searchField.requestFocus()
             imm.showSoftInput(searchField, InputMethodManager.SHOW_IMPLICIT)
@@ -49,7 +50,7 @@ class ComicList : AppCompatActivity() {
             val searchValue = searchField.text.toString()
             viewModel.searchComics(searchValue).observe(this, {
                 val comicList = it.data.results.map { comic ->
-                    MarvelItem(comic.title, comic.thumbnail.path, comic.thumbnail.extension)
+                    MarvelItem(comic.title, comic.thumbnail.path, comic.thumbnail.extension, comic.description, comic.urls[0].url)
                 }
                 Log.i("viewmodel", "observed")
                 Log.i("comiclist", comicList.toString())
@@ -68,7 +69,7 @@ class ComicList : AppCompatActivity() {
         if (fp.isOnline(this)) {
             viewModel.callComics().observe(this, {
                 val comicList = it.data.results.map { comic ->
-                    MarvelItem(comic.title, comic.thumbnail.path, comic.thumbnail.extension)
+                    MarvelItem(comic.title, comic.thumbnail.path, comic.thumbnail.extension, comic.description, comic.urls[0].url)
                 }
                 Log.i("viewmodel", "observed")
                 Log.i("comiclist", comicList.toString())

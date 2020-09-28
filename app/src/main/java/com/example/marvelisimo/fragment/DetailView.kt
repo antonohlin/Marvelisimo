@@ -1,5 +1,7 @@
 package com.example.marvelisimo.fragment
 
+import android.content.Intent
+import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.ImageView
@@ -17,25 +19,24 @@ class DetailView : AppCompatActivity() {
         setContentView(R.layout.layout_detail_view)
         setSupportActionBar(findViewById(R.id.toolbar))
 
-        val favorite = findViewById<ImageView>(R.id.favorite)
-        val db = DbHelper()
         val marvelItem = intent.getParcelableExtra<MarvelItem>(INTENT_PARCELABLE)
         val url = changeUrl(marvelItem)
 
         Picasso.get().load(url).into(detail_image)
         detail_title.text = marvelItem.title
-        //TODO: lägg till description
-
-        favorite.setOnClickListener{
-            db.saveToDb(marvelItem, url)
-            Toast.makeText(this,"Favorit",Toast.LENGTH_SHORT).show()
+        description.text = marvelItem.description
+        Log.i("url", marvelItem.url)
+        val descriptionUrl = marvelItem.url
+        val i = Intent(Intent.ACTION_VIEW)
+        findViewById<TextView>(R.id.moreInfoUrl).setOnClickListener(){
+            i.data = Uri.parse(descriptionUrl)
+            startActivity(i)
         }
 
     }
 
     fun changeUrl(item: MarvelItem): String{
-        val url = item.imageUrl.replace("http", "https")+"."+item.extension
-        return url
+        return item.imageUrl+"."+item.extension
     }
 
 }

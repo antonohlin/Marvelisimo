@@ -11,8 +11,8 @@ import java.security.NoSuchAlgorithmException
 
 object MarvelRetrofit {
     private const val LOG = false
-    private const val PUBLIC_KEY = "b8bd59c182e2fddefff77aa8c8c64c20"
-    private const val PRIVATE_KEY = "8a6dfc3b363b0dfb2c532144c20268cb96004fc0"
+    const val PUBLIC_KEY = "b8bd59c182e2fddefff77aa8c8c64c20"
+    const val PRIVATE_KEY = "8a6dfc3b363b0dfb2c532144c20268cb96004fc0"
     private const val BASE_URL = "https://gateway.marvel.com/v1/public/"
 
     val marvelService: MarvelService = Retrofit.Builder()
