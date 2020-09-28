@@ -13,6 +13,7 @@ class DbHelper (
         val marvelItemToDb = RealmMarvelItem()
         Log.i("SavetoDB", marvelItem.title + marvelItem.imageUrl)
 
+        marvelItemToDb.id = marvelItem.id
         marvelItemToDb.name = marvelItem.title
         marvelItemToDb.imageUrlBase = marvelItem.imageUrlBase
 

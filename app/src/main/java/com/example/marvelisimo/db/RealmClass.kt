@@ -1,27 +1,17 @@
 package com.example.marvelisimo.db
 
-// Import the Kotlin extensions for Realm.
 import io.realm.RealmObject
 import io.realm.annotations.PrimaryKey
-import io.realm.kotlin.createObject
-import io.realm.kotlin.where
-import java.util.*
 
-// Define your model classes by extending RealmObject.
-// You must annotate all classes with `open`.
-open class RealmMarvelItem(
-    @PrimaryKey var id: String = UUID.randomUUID().toString(),
+
+open class RealmMarvelItem (
+    @PrimaryKey var id: Int = 0,
     var name: String = "",
     var description: String = "",
     var imageUrlBase: String = "",
     var extension: String = "",
     var url: String = ""
 ): RealmObject() {
-
-    val imageUrl:String
-        get()=imageUrlBase+"."+extension
-
-}
 
 //open class Image(
 //    // Properties can be annotated with PrimaryKey or Index.

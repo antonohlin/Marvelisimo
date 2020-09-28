@@ -15,9 +15,10 @@
         android:id="@+id/recycler_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_marginTop="55dp"
+        android:background="@color/colorPrimary"
         android:clipToPadding="false"
         android:padding="4dp"
-        android:layout_marginTop="55dp"
         tools:listitem="@layout/marvel_item">
 
     </androidx.recyclerview.widget.RecyclerView>
