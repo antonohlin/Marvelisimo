@@ -30,7 +30,7 @@ data class Character(
     val thumbnail: Image,
     val name: String,
     val description: String,
-    val resourceURI: String
+    val urls: Array<MarvelUrl>
 )
 
 data class Comic (
@@ -38,10 +38,16 @@ data class Comic (
     val title: String,
     val description: String,
     val thumbnail: Image,
-    val resourceURI: String
+    val urls: Array<MarvelUrl>
 )
 
 data class Image(
     val path:String,
     val extension:String
 )
+
+data class MarvelUrl(
+    val type:String,
+    val url:String
+)
+

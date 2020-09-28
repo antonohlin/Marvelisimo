@@ -45,7 +45,7 @@ class ComicList : AppCompatActivity() {
             val searchValue = searchField.text.toString()
             viewModel.searchComics(searchValue).observe(this, {
                 val comicList = it.data.results.map { comic ->
-                    MarvelItem(comic.title, comic.thumbnail.path, comic.thumbnail.extension, comic.description, comic.resourceURI)
+                    MarvelItem(comic.title, comic.thumbnail.path, comic.thumbnail.extension, comic.description, comic.urls[0].url)
                 }
                 Log.i("viewmodel", "observed")
                 Log.i("comiclist", comicList.toString())
@@ -64,7 +64,7 @@ class ComicList : AppCompatActivity() {
         if (fp.isOnline(this)) {
             viewModel.callComics().observe(this, {
                 val comicList = it.data.results.map { comic ->
-                    MarvelItem(comic.title, comic.thumbnail.path, comic.thumbnail.extension, comic.description, comic.resourceURI)
+                    MarvelItem(comic.title, comic.thumbnail.path, comic.thumbnail.extension, comic.description, comic.urls[0].url)
                 }
                 Log.i("viewmodel", "observed")
                 Log.i("comiclist", comicList.toString())
