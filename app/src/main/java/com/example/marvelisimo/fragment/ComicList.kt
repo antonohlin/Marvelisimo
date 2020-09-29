@@ -1,5 +1,6 @@
 package com.example.marvelisimo.fragment
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
@@ -45,21 +46,14 @@ class ComicList : AppCompatActivity() {
             searchField.requestFocus()
             imm.showSoftInput(searchField, InputMethodManager.SHOW_IMPLICIT)
         }
+
         favorite.setOnClickListener{
             val favorites = viewModel.loadFavorites()
 
             if (favorites.isEmpty()){
                 noFavorites.visibility = TextView.VISIBLE
             }
-
-
-            recycler_view.layoutManager = LinearLayoutManager(this)
-            recycler_view.setHasFixedSize(true)
-            recycler_view.adapter = MarvelAdapter(this, favorites) {
-                val intent = Intent(this, DetailView::class.java)
-                intent.putExtra(CharacterList.INTENT_PARCELABLE, it)
-                startActivity(intent)
-            }
+            loadIntoRecycleView(this, favorites)
         }
 
         confirmSearch.setOnClickListener {
@@ -70,30 +64,16 @@ class ComicList : AppCompatActivity() {
                 val comicList = it.data.results.map { comic ->
                     MarvelItem(comic.id, comic.title, comic.thumbnail.path, comic.thumbnail.extension, comic.description, comic.urls[0].url)
                 }
-                recycler_view.layoutManager = LinearLayoutManager(this)
-                recycler_view.setHasFixedSize(true)
-                recycler_view.adapter = MarvelAdapter(this, comicList) {
-                    val intent = Intent(this, DetailView::class.java)
-                    intent.putExtra(CharacterList.INTENT_PARCELABLE, it)
-                    startActivity(intent)
-                }
+                loadIntoRecycleView(this, comicList)
             })
-
         }
-
 
         if (fp.isOnline(this)) {
             viewModel.callComics().observe(this, {
                 val comicList = it.data.results.map { comic ->
                     MarvelItem(comic.id, comic.title, comic.thumbnail.path, comic.thumbnail.extension, comic.description, comic.urls[0].url)
                 }
-                recycler_view.layoutManager = LinearLayoutManager(this)
-                recycler_view.setHasFixedSize(true)
-                recycler_view.adapter = MarvelAdapter(this, comicList) {
-                    val intent = Intent(this, DetailView::class.java)
-                    intent.putExtra(CharacterList.INTENT_PARCELABLE, it)
-                    startActivity(intent)
-                }
+                loadIntoRecycleView(this, comicList)
             })
         } else {
             println("No internet lol")
@@ -106,6 +86,14 @@ class ComicList : AppCompatActivity() {
         startActivity(intent)
     }
 
-
+    private fun loadIntoRecycleView(context: Context, results: List<MarvelItem>) {
+        recycler_view.layoutManager = LinearLayoutManager(context)
+        recycler_view.setHasFixedSize(true)
+        recycler_view.adapter = MarvelAdapter(context, results) {
+            val intent = Intent(this, DetailView::class.java)
+            intent.putExtra(CharacterList.INTENT_PARCELABLE, it)
+            startActivity(intent)
+        }
+    }
 
 }
