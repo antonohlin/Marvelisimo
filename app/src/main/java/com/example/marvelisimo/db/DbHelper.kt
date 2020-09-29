@@ -1,9 +1,11 @@
 package com.example.marvelisimo.db
 
+import android.os.AsyncTask.execute
 import com.example.marvelisimo.model.MarvelItem
 import io.realm.Realm
+import io.realm.kotlin.where
 
-class DbHelper (
+class DbHelper(
 
     val realm: Realm = Realm.getDefaultInstance()
 ) {
@@ -20,4 +22,17 @@ class DbHelper (
         realm.commitTransaction()
     }
 
+    fun removeFromDb(id: Int) {
+
+        val query = realm.where<RealmMarvelItem>()
+        query.equalTo("id", id)
+        val result = query.findFirst()
+        realm.executeTransaction { realm ->
+
+            if (result != null) {
+                result.deleteFromRealm()
+            }
+        }
+
+    }
 }
