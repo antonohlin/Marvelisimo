@@ -22,9 +22,15 @@ class DetailView : AppCompatActivity() {
         val marvelItem = intent.getParcelableExtra<MarvelItem>(INTENT_PARCELABLE)
         val favorite = findViewById<ImageView>(R.id.favorite)
         val db = DbHelper()
+        val fp = FunctionProvider()
         favorite.setOnClickListener {
+            if(!fp.alreadyFavorited(marvelItem)){
                 db.saveToDb(marvelItem)
                 Toast.makeText(this, "Favorited", Toast.LENGTH_SHORT).show()
+            }
+            else {
+                Toast.makeText(this, "Already a favorite", Toast.LENGTH_SHORT).show()
+            }
         }
             Picasso.get().load(marvelItem.imageUrl).into(detail_image)
             detail_title.text = marvelItem.title

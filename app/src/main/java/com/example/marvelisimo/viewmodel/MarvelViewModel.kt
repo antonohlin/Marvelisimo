@@ -92,14 +92,9 @@ class MarvelViewModel : ViewModel() {
     fun loadFavorites(): List<MarvelItem> {
         val realm = Realm.getDefaultInstance()
         val favoritesResult = realm.where<RealmMarvelItem>().findAll()
-        Log.i("favoriteRes", favoritesResult.toString())
-
         val marvelFavorites = favoritesResult.map { realmChar ->
             MarvelItem(realmChar.id, realmChar.name, realmChar.imageUrlBase, "jpg", realmChar.description, realmChar.url)
-
         }
-        Log.i("favoriteRes2", marvelFavorites.toString())
-
         return marvelFavorites
     }
 
