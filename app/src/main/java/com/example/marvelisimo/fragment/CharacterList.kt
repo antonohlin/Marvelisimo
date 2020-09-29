@@ -3,6 +3,7 @@ package com.example.marvelisimo.fragment
 import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
+import android.graphics.Typeface
 import android.os.Bundle
 import android.view.View
 import android.view.View.VISIBLE
@@ -32,6 +33,7 @@ class CharacterList : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.layout_character_list_)
         setSupportActionBar(findViewById(R.id.toolbar))
+        findViewById<TextView>(R.id.character_toolbar).setTypeface(null, Typeface.BOLD);
 
         val noFavorites: TextView = findViewById<TextView>(R.id.no_favorites)
         val favorite = findViewById<ImageView>(R.id.favorite_icon)

@@ -2,6 +2,7 @@ package com.example.marvelisimo.fragment
 
 import android.content.Context
 import android.content.Intent
+import android.graphics.Typeface
 import android.os.Bundle
 import android.view.View
 import android.view.inputmethod.InputMethodManager
@@ -24,6 +25,7 @@ class ComicList : AppCompatActivity() {
 
         super.onCreate(savedInstanceState)
         setContentView(R.layout.layout_character_list_)
+        findViewById<TextView>(R.id.comics_toolbar).setTypeface(null, Typeface.BOLD);
 
         val noFavorites: TextView = findViewById<TextView>(R.id.no_favorites)
         val favorite = findViewById<ImageView>(R.id.favorite_icon)
