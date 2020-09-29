@@ -1,6 +1,7 @@
 package com.example.marvelisimo.fragment
 
 import android.annotation.SuppressLint
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
@@ -41,10 +42,10 @@ class CharacterList : AppCompatActivity() {
         val viewModel: MarvelViewModel by viewModels()
         val fp = FunctionProvider()
 
-        favorite.setOnClickListener{
+        favorite.setOnClickListener {
             val favorites = viewModel.loadFavorites()
 
-            if (favorites.isEmpty()){
+            if (favorites.isEmpty()) {
                 noFavorites.visibility = TextView.VISIBLE
             }
 
@@ -52,7 +53,7 @@ class CharacterList : AppCompatActivity() {
             recycler_view.setHasFixedSize(true)
             recycler_view.adapter = MarvelAdapter(this, favorites) {
                 val intent = Intent(this, DetailView::class.java)
-                intent.putExtra(CharacterList.INTENT_PARCELABLE, it)
+                intent.putExtra(INTENT_PARCELABLE, it)
                 startActivity(intent)
             }
         }
@@ -75,13 +76,20 @@ class CharacterList : AppCompatActivity() {
             val searchValue = searchField.text.toString()
             viewModel.searchCharacters(searchValue).observe(this, {
                 val comicList = it.data.results.map { comic ->
-                    MarvelItem(comic.id, comic.name, comic.thumbnail.path, comic.thumbnail.extension, comic.description, comic.urls[0].url)
+                    MarvelItem(
+                        comic.id,
+                        comic.name,
+                        comic.thumbnail.path,
+                        comic.thumbnail.extension,
+                        comic.description,
+                        comic.urls[0].url
+                    )
                 }
                 recycler_view.layoutManager = LinearLayoutManager(this)
                 recycler_view.setHasFixedSize(true)
                 recycler_view.adapter = MarvelAdapter(this, comicList) {
                     val intent = Intent(this, DetailView::class.java)
-                    intent.putExtra(CharacterList.INTENT_PARCELABLE, it)
+                    intent.putExtra(INTENT_PARCELABLE, it)
                     startActivity(intent)
                 }
             })
@@ -93,20 +101,38 @@ class CharacterList : AppCompatActivity() {
         if (fp.isOnline(this)) {
             viewModel.callCharacters().observe(this, {
                 val comicList = it.data.results.map { comic ->
-                    MarvelItem(comic.id, comic.name, comic.thumbnail.path, comic.thumbnail.extension, comic.description, comic.urls[1].url)
+                    MarvelItem(
+                        comic.id,
+                        comic.name,
+                        comic.thumbnail.path,
+                        comic.thumbnail.extension,
+                        comic.description,
+                        comic.urls[1].url
+                    )
                 }
                 recycler_view.layoutManager = LinearLayoutManager(this)
                 recycler_view.setHasFixedSize(true)
                 recycler_view.adapter = MarvelAdapter(this, comicList) {
                     val intent = Intent(this, DetailView::class.java)
-                    intent.putExtra(CharacterList.INTENT_PARCELABLE, it)
+                    intent.putExtra(INTENT_PARCELABLE, it)
                     startActivity(intent)
                 }
             })
 
         } else {
             println("No internet lol")
-            findViewById<TextView>(R.id.no_connection).visibility = VISIBLE
+            val faves = viewModel.loadFavorites()
+            if (faves.isEmpty()) {
+                findViewById<TextView>(R.id.no_connection).visibility = VISIBLE
+            } else {
+                recycler_view.layoutManager = LinearLayoutManager(this)
+                recycler_view.setHasFixedSize(true)
+                recycler_view.adapter = MarvelAdapter(this, faves) {
+                    val intent = Intent(this, DetailView::class.java)
+                    intent.putExtra(INTENT_PARCELABLE, it)
+                    startActivity(intent)
+                }
+            }
         }
     }
 
@@ -115,5 +141,6 @@ class CharacterList : AppCompatActivity() {
         startActivity(intent)
     }
 
+   
 }
 
