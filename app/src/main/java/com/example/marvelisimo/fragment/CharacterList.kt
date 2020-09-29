@@ -13,6 +13,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat.startActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.marvelisimo.R
 import com.example.marvelisimo.adapter.MarvelAdapter
@@ -48,14 +49,7 @@ class CharacterList : AppCompatActivity() {
             if (favorites.isEmpty()) {
                 noFavorites.visibility = TextView.VISIBLE
             }
-
-            recycler_view.layoutManager = LinearLayoutManager(this)
-            recycler_view.setHasFixedSize(true)
-            recycler_view.adapter = MarvelAdapter(this, favorites) {
-                val intent = Intent(this, DetailView::class.java)
-                intent.putExtra(INTENT_PARCELABLE, it)
-                startActivity(intent)
-            }
+            loadIntoRecycleView(this, favorites)
         }
 
         comicsToolbarLink.setOnClickListener {
@@ -85,13 +79,7 @@ class CharacterList : AppCompatActivity() {
                         comic.urls[0].url
                     )
                 }
-                recycler_view.layoutManager = LinearLayoutManager(this)
-                recycler_view.setHasFixedSize(true)
-                recycler_view.adapter = MarvelAdapter(this, comicList) {
-                    val intent = Intent(this, DetailView::class.java)
-                    intent.putExtra(INTENT_PARCELABLE, it)
-                    startActivity(intent)
-                }
+                loadIntoRecycleView(this, comicList)
             })
 
         }
@@ -110,13 +98,8 @@ class CharacterList : AppCompatActivity() {
                         comic.urls[1].url
                     )
                 }
-                recycler_view.layoutManager = LinearLayoutManager(this)
-                recycler_view.setHasFixedSize(true)
-                recycler_view.adapter = MarvelAdapter(this, comicList) {
-                    val intent = Intent(this, DetailView::class.java)
-                    intent.putExtra(INTENT_PARCELABLE, it)
-                    startActivity(intent)
-                }
+
+                loadIntoRecycleView(this, comicList)
             })
 
         } else {
@@ -125,22 +108,26 @@ class CharacterList : AppCompatActivity() {
             if (faves.isEmpty()) {
                 findViewById<TextView>(R.id.no_connection).visibility = VISIBLE
             } else {
-                recycler_view.layoutManager = LinearLayoutManager(this)
-                recycler_view.setHasFixedSize(true)
-                recycler_view.adapter = MarvelAdapter(this, faves) {
-                    val intent = Intent(this, DetailView::class.java)
-                    intent.putExtra(INTENT_PARCELABLE, it)
-                    startActivity(intent)
-                }
+                loadIntoRecycleView(this, faves)
             }
         }
     }
+
 
     private fun goToComics() {
         val intent = Intent(this, ComicList::class.java)
         startActivity(intent)
     }
 
-   
+    private fun loadIntoRecycleView(context: Context, results: List<MarvelItem>) {
+        recycler_view.layoutManager = LinearLayoutManager(context)
+        recycler_view.setHasFixedSize(true)
+        recycler_view.adapter = MarvelAdapter(context, results) {
+            val intent = Intent(this, DetailView::class.java)
+            intent.putExtra(INTENT_PARCELABLE, it)
+            startActivity(intent)
+        }
+    }
+
 }
 
