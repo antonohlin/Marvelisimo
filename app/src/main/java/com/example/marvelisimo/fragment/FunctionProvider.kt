@@ -1,6 +1,5 @@
 package com.example.marvelisimo.fragment
 
-import android.R.attr.name
 import android.content.Context
 import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
@@ -47,4 +46,5 @@ class FunctionProvider {
         }
         return favorite
     }
+
 }

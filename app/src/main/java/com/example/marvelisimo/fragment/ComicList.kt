@@ -2,7 +2,6 @@ package com.example.marvelisimo.fragment
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.Button
@@ -25,12 +24,15 @@ class ComicList : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.layout_character_list_)
 
+        val noFavorites: TextView = findViewById<TextView>(R.id.no_favorites)
+        val favorite = findViewById<ImageView>(R.id.favorite_icon)
         val characterToolbarLink = findViewById<TextView>(R.id.character_toolbar)
         val confirmSearch = findViewById<Button>(R.id.confirmSearchButton)
         val searchToolbarLink = findViewById<ImageView>(R.id.search)
         val searchField = findViewById<EditText>(R.id.SearchCharacterComic)
         val imm = getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
         val viewModel: MarvelViewModel by viewModels()
+        val fp = FunctionProvider()
 
         characterToolbarLink.setOnClickListener {
             goToCharacters()
@@ -42,6 +44,22 @@ class ComicList : AppCompatActivity() {
             confirmSearch.visibility = View.VISIBLE
             searchField.requestFocus()
             imm.showSoftInput(searchField, InputMethodManager.SHOW_IMPLICIT)
+        }
+        favorite.setOnClickListener{
+            val favorites = viewModel.loadFavorites()
+
+            if (favorites.isEmpty()){
+                noFavorites.visibility = TextView.VISIBLE
+            }
+
+
+            recycler_view.layoutManager = LinearLayoutManager(this)
+            recycler_view.setHasFixedSize(true)
+            recycler_view.adapter = MarvelAdapter(this, favorites) {
+                val intent = Intent(this, DetailView::class.java)
+                intent.putExtra(CharacterList.INTENT_PARCELABLE, it)
+                startActivity(intent)
+            }
         }
 
         confirmSearch.setOnClickListener {
@@ -62,7 +80,7 @@ class ComicList : AppCompatActivity() {
             })
 
         }
-        val fp = FunctionProvider()
+
 
         if (fp.isOnline(this)) {
             viewModel.callComics().observe(this, {
@@ -87,4 +105,7 @@ class ComicList : AppCompatActivity() {
         val intent = Intent(this, CharacterList::class.java)
         startActivity(intent)
     }
+
+
+
 }
