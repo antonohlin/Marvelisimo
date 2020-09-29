@@ -52,8 +52,6 @@ class ComicList : AppCompatActivity() {
                 val comicList = it.data.results.map { comic ->
                     MarvelItem(comic.id, comic.title, comic.thumbnail.path, comic.thumbnail.extension, comic.description, comic.urls[0].url)
                 }
-                Log.i("viewmodel", "observed")
-                Log.i("comiclist", comicList.toString())
                 recycler_view.layoutManager = LinearLayoutManager(this)
                 recycler_view.setHasFixedSize(true)
                 recycler_view.adapter = MarvelAdapter(this, comicList) {
@@ -71,8 +69,6 @@ class ComicList : AppCompatActivity() {
                 val comicList = it.data.results.map { comic ->
                     MarvelItem(comic.id, comic.title, comic.thumbnail.path, comic.thumbnail.extension, comic.description, comic.urls[0].url)
                 }
-                Log.i("viewmodel", "observed")
-                Log.i("comiclist", comicList.toString())
                 recycler_view.layoutManager = LinearLayoutManager(this)
                 recycler_view.setHasFixedSize(true)
                 recycler_view.adapter = MarvelAdapter(this, comicList) {

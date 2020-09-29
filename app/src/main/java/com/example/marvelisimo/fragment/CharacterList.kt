@@ -3,8 +3,6 @@ package com.example.marvelisimo.fragment
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
-import android.view.View
 import android.view.View.GONE
 import android.view.View.VISIBLE
 import android.view.inputmethod.InputMethodManager
@@ -75,8 +73,6 @@ class CharacterList : AppCompatActivity() {
                 val comicList = it.data.results.map { comic ->
                     MarvelItem(comic.id, comic.name, comic.thumbnail.path, comic.thumbnail.path, comic.description, comic.urls[1].url)
                 }
-                Log.i("viewmodel", "observed")
-                Log.i("comiclist", comicList.toString())
                 recycler_view.layoutManager = LinearLayoutManager(this)
                 recycler_view.setHasFixedSize(true)
                 recycler_view.adapter = MarvelAdapter(this, comicList) {
@@ -95,8 +91,6 @@ class CharacterList : AppCompatActivity() {
                 val comicList = it.data.results.map { comic ->
                     MarvelItem(comic.id, comic.name, comic.thumbnail.path, comic.thumbnail.extension, comic.description, comic.urls[1].url)
                 }
-                Log.i("viewmodel", "observed")
-                Log.i("comiclist", comicList.toString())
                 recycler_view.layoutManager = LinearLayoutManager(this)
                 recycler_view.setHasFixedSize(true)
                 recycler_view.adapter = MarvelAdapter(this, comicList) {
