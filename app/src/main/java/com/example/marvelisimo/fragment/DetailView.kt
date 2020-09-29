@@ -25,29 +25,38 @@ class DetailView : AppCompatActivity() {
         val fp = FunctionProvider()
 
         favorite.setOnClickListener {
-            if(!fp.alreadyFavorited(marvelItem)){
+            if (!fp.alreadyFavorited(marvelItem)) {
                 db.saveToDb(marvelItem)
                 Toast.makeText(this, "Favorited", Toast.LENGTH_SHORT).show()
                 //TODO Change color of favorite icon
 
-            }
-            else {
+            } else {
                 db.removeFromDb(marvelItem.id)
                 Toast.makeText(this, "Already a favorite", Toast.LENGTH_SHORT).show()
             }
         }
 
-            Picasso.get().load(marvelItem.imageUrl).into(detail_image)
-            detail_title.text = marvelItem.title
-            description.text = marvelItem.description
-            val descriptionUrl = marvelItem.url
-            val i = Intent(Intent.ACTION_VIEW)
+        Picasso.get().load(marvelItem.imageUrl).into(detail_image)
+        detail_title.text = marvelItem.title
+        description.text = marvelItem.description
+        val descriptionUrl = marvelItem.url
+        val i = Intent(Intent.ACTION_VIEW)
 
-            findViewById<TextView>(R.id.moreInfoUrl).setOnClickListener() {
-                i.data = Uri.parse(descriptionUrl)
-                startActivity(i)
-            }
-
+        findViewById<TextView>(R.id.moreInfoUrl).setOnClickListener() {
+            i.data = Uri.parse(descriptionUrl)
+            startActivity(i)
         }
 
+        findViewById<TextView>(R.id.character_toolbar).setOnClickListener() {
+            val intent = Intent(this, CharacterList::class.java)
+            startActivity(intent)
+        }
+
+        findViewById<TextView>(R.id.comics_toolbar).setOnClickListener() {
+            val intent = Intent(this, ComicList::class.java)
+            startActivity(intent)
+        }
+    }
+
 }
+
