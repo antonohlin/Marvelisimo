@@ -30,6 +30,7 @@ class ComicList : AppCompatActivity() {
         val noFavorites: TextView = findViewById<TextView>(R.id.no_favorites)
         val favorite = findViewById<ImageView>(R.id.favorite_icon)
         val characterToolbarLink = findViewById<TextView>(R.id.character_toolbar)
+        val comicToolbarLink = findViewById<TextView>(R.id.comics_toolbar)
         val confirmSearch = findViewById<Button>(R.id.confirmSearchButton)
         val searchToolbarLink = findViewById<ImageView>(R.id.search)
         val searchField = findViewById<EditText>(R.id.SearchCharacterComic)
@@ -39,6 +40,10 @@ class ComicList : AppCompatActivity() {
 
         characterToolbarLink.setOnClickListener {
             goToCharacters()
+        }
+        comicToolbarLink.setOnClickListener {
+            noFavorites.visibility = TextView.GONE
+            refreshComics()
         }
 
         searchToolbarLink.setOnClickListener {
@@ -71,16 +76,20 @@ class ComicList : AppCompatActivity() {
         }
 
         if (fp.isOnline(this)) {
-            viewModel.callComics().observe(this, {
-                val comicList = it.data.results.map { comic ->
-                    MarvelItem(comic.id, comic.title, comic.thumbnail.path, comic.thumbnail.extension, comic.description, comic.urls[0].url)
-                }
-                loadIntoRecycleView(this, comicList)
-            })
+            refreshComics()
         } else {
             println("No internet lol")
             findViewById<TextView>(R.id.no_connection).visibility = View.VISIBLE
         }
+    }
+    private fun refreshComics(){
+        val viewModel: MarvelViewModel by viewModels()
+        viewModel.callComics().observe(this, {
+            val comicList = it.data.results.map { comic ->
+                MarvelItem(comic.id, comic.title, comic.thumbnail.path, comic.thumbnail.extension, comic.description, comic.urls[0].url)
+            }
+            loadIntoRecycleView(this, comicList)
+        })
     }
 
     private fun goToCharacters() {

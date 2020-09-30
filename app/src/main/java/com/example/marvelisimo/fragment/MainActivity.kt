@@ -8,7 +8,6 @@ import android.view.animation.AnimationUtils
 import androidx.appcompat.app.AppCompatActivity
 import com.example.marvelisimo.R
 import com.example.marvelisimo.db.RealmStart
-import io.realm.Realm
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
@@ -16,7 +15,7 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        start_button.setOnClickListener { v -> fade() }
+        start_button.setOnClickListener { v -> goToNextView() }
 
     }
 
@@ -33,7 +32,7 @@ class MainActivity : AppCompatActivity() {
         goToNextView()
     }
 
-     fun goToNextView() {
+     private fun goToNextView() {
         val intent = Intent (this, CharacterList::class.java)
         startActivity(intent)
     }

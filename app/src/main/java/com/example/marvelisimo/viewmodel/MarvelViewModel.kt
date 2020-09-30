@@ -36,7 +36,6 @@ class MarvelViewModel : ViewModel() {
                 if (err?.message != null) Log.d("__", "Error getAllCharacters " + err.message)
                 else {
                     resultList.postValue(result)
-                    Log.d("___", "I got a ComicDataWrapper $result")
                 }
             }
         return resultList
@@ -52,7 +51,6 @@ class MarvelViewModel : ViewModel() {
                 if (err?.message != null) Log.d("__", "Error getAllCharacters " + err.message)
                 else {
                     resultList.postValue(result)
-                    Log.d("___", "I got a ComicDataWrapper $result")
                 }
             }
         return resultList
@@ -68,7 +66,6 @@ class MarvelViewModel : ViewModel() {
                 if (err?.message != null) Log.d("__", "Error getAllCharacters " + err.message)
                 else {
                     resultList.postValue(result)
-                    Log.d("___", "I got a ComicDataWrapper $result")
                 }
             }
         return resultList
@@ -83,7 +80,6 @@ class MarvelViewModel : ViewModel() {
                 if (err?.message != null) Log.d("__", "Error getAllCharacters " + err.message)
                 else {
                     resultList.postValue(result)
-                    Log.d("___", "I got a ComicDataWrapper $result")
                 }
             }
         return resultList

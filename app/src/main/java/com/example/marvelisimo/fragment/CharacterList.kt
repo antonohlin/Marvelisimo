@@ -14,7 +14,6 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.content.ContextCompat.startActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.marvelisimo.R
 import com.example.marvelisimo.adapter.MarvelAdapter
@@ -35,9 +34,10 @@ class CharacterList : AppCompatActivity() {
         setSupportActionBar(findViewById(R.id.toolbar))
         findViewById<TextView>(R.id.character_toolbar).setTypeface(null, Typeface.BOLD);
 
-        val noFavorites: TextView = findViewById<TextView>(R.id.no_favorites)
+        val noFavorites: TextView = findViewById(R.id.no_favorites)
         val favorite = findViewById<ImageView>(R.id.favorite_icon)
         val comicsToolbarLink = findViewById<TextView>(R.id.comics_toolbar)
+        val charactersToolbarLink = findViewById<TextView>(R.id.character_toolbar)
         val confirmSearch = findViewById<Button>(R.id.confirmSearchButton)
         val searchToolbarLink = findViewById<ImageView>(R.id.search)
         val searchField = findViewById<EditText>(R.id.SearchCharacterComic)
@@ -56,6 +56,10 @@ class CharacterList : AppCompatActivity() {
 
         comicsToolbarLink.setOnClickListener {
             goToComics()
+        }
+        charactersToolbarLink.setOnClickListener {
+            noFavorites.visibility = TextView.GONE
+            refreshCharacters()
         }
 
         searchToolbarLink.setOnClickListener {
@@ -86,24 +90,8 @@ class CharacterList : AppCompatActivity() {
 
         }
 
-
-
         if (fp.isOnline(this)) {
-            viewModel.callCharacters().observe(this, {
-                val comicList = it.data.results.map { comic ->
-                    MarvelItem(
-                        comic.id,
-                        comic.name,
-                        comic.thumbnail.path,
-                        comic.thumbnail.extension,
-                        comic.description,
-                        comic.urls[1].url
-                    )
-                }
-
-                loadIntoRecycleView(this, comicList)
-            })
-
+           refreshCharacters()
         } else {
             println("No internet lol")
             val faves = viewModel.loadFavorites()
@@ -113,6 +101,24 @@ class CharacterList : AppCompatActivity() {
                 loadIntoRecycleView(this, faves)
             }
         }
+    }
+
+    private fun refreshCharacters(){
+        val viewModel: MarvelViewModel by viewModels()
+        viewModel.callCharacters().observe(this, {
+            val comicList = it.data.results.map { comic ->
+                MarvelItem(
+                    comic.id,
+                    comic.name,
+                    comic.thumbnail.path,
+                    comic.thumbnail.extension,
+                    comic.description,
+                    comic.urls[1].url
+                )
+            }
+
+            loadIntoRecycleView(this, comicList)
+        })
     }
 
 
