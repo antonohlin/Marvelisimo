@@ -30,13 +30,16 @@ class FavoriteList : AppCompatActivity() {
         val comicsToolbarLink = findViewById<TextView>(R.id.comics_toolbar)
         val characterToolbarLink = findViewById<TextView>(R.id.character_toolbar)
         val viewModel: MarvelViewModel by viewModels()
+        val fp = FunctionProvider()
 
+        if (fp.isOnline(this)) {
             val faves = viewModel.loadFavorites()
             if (faves.isEmpty()) {
-                findViewById<TextView>(R.id.no_connection).visibility = VISIBLE
+                findViewById<TextView>(R.id.no_favorites).visibility = VISIBLE
             } else {
                 loadIntoRecycleView(this, faves)
             }
+        }
 
         comicsToolbarLink.setOnClickListener {
             goToComics()
@@ -45,7 +48,6 @@ class FavoriteList : AppCompatActivity() {
         characterToolbarLink.setOnClickListener(){
             goToCharacters()
         }
-
     }
 
     private fun loadIntoRecycleView(context: Context, results: List<MarvelItem>) {

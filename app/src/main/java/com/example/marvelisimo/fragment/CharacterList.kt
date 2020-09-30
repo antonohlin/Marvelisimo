@@ -52,6 +52,7 @@ class CharacterList : AppCompatActivity() {
         comicsToolbarLink.setOnClickListener {
             goToComics()
         }
+
         charactersToolbarLink.setOnClickListener {
             noFavorites.visibility = TextView.GONE
             refreshCharacters()
@@ -92,7 +93,7 @@ class CharacterList : AppCompatActivity() {
             if (faves.isEmpty()) {
                 findViewById<TextView>(R.id.no_favorites).visibility = VISIBLE
             } else {
-                loadIntoRecycleView(this, faves)
+                goToFavorites()
             }
         }
     }
@@ -100,21 +101,19 @@ class CharacterList : AppCompatActivity() {
     private fun refreshCharacters(){
         val viewModel: MarvelViewModel by viewModels()
         viewModel.callCharacters().observe(this, {
-            val comicList = it.data.results.map { comic ->
+            val comicList = it.data.results.map { char ->
                 MarvelItem(
-                    comic.id,
-                    comic.name,
-                    comic.thumbnail.path,
-                    comic.thumbnail.extension,
-                    comic.description,
-                    comic.urls[1].url
+                    char.id,
+                    char.name,
+                    char.thumbnail.path,
+                    char.thumbnail.extension,
+                    char.description,
+                    char.urls[1].url
                 )
             }
-
             loadIntoRecycleView(this, comicList)
         })
     }
-
 
     private fun goToComics() {
         val intent = Intent(this, ComicList::class.java)

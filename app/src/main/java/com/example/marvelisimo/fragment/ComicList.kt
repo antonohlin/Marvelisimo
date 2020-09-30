@@ -43,8 +43,8 @@ class ComicList : AppCompatActivity() {
         characterToolbarLink.setOnClickListener {
             goToCharacters()
         }
+
         comicToolbarLink.setOnClickListener {
-            noFavorites.visibility = TextView.GONE
             refreshComics()
         }
 
