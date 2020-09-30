@@ -27,7 +27,8 @@ class ComicList : AppCompatActivity() {
         setContentView(R.layout.layout_character_list_)
         findViewById<TextView>(R.id.comics_toolbar).setTypeface(null, Typeface.BOLD);
 
-        val noFavorites: TextView = findViewById<TextView>(R.id.no_favorites)
+        val noFavorites = findViewById<TextView>(R.id.no_favorites)
+        val noSearchResult = findViewById<TextView>(R.id.no_search)
         val favorite = findViewById<ImageView>(R.id.favorite_icon)
         val characterToolbarLink = findViewById<TextView>(R.id.character_toolbar)
         val comicToolbarLink = findViewById<TextView>(R.id.comics_toolbar)
@@ -43,6 +44,7 @@ class ComicList : AppCompatActivity() {
         }
         comicToolbarLink.setOnClickListener {
             noFavorites.visibility = TextView.GONE
+            noSearchResult.visibility = View.GONE
             refreshComics()
         }
 
@@ -66,11 +68,15 @@ class ComicList : AppCompatActivity() {
         confirmSearch.setOnClickListener {
             searchField.visibility = View.GONE
             confirmSearch.visibility = View.GONE
+            noSearchResult.visibility = View.GONE
             val searchValue = searchField.text.toString()
             viewModel.searchComics(searchValue).observe(this, {
                 val comicList = it.data.results.map { comic ->
                     MarvelItem(comic.id, comic.title, comic.thumbnail.path, comic.thumbnail.extension, comic.description, comic.urls[0].url)
                 }
+                if (comicList.isEmpty()){
+                noSearchResult.visibility = View.VISIBLE
+            }
                 loadIntoRecycleView(this, comicList)
             })
         }
