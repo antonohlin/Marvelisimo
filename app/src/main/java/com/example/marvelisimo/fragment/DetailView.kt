@@ -3,6 +3,7 @@ package com.example.marvelisimo.fragment
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
@@ -23,6 +24,9 @@ class DetailView : AppCompatActivity() {
         val favorite = findViewById<ImageView>(R.id.favorite)
         val db = DbHelper()
         val fp = FunctionProvider()
+        findViewById<ImageView>(R.id.favorite_icon).visibility = View.INVISIBLE
+        findViewById<ImageView>(R.id.search).visibility = View.INVISIBLE
+
 
         favorite.setOnClickListener {
             if (!fp.alreadyFavorited(marvelItem)) {
