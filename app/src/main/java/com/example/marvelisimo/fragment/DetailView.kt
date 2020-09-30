@@ -2,11 +2,11 @@ package com.example.marvelisimo.fragment
 
 import android.content.Intent
 import android.net.Uri
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import com.example.marvelisimo.R
 import com.example.marvelisimo.db.DbHelper
 import com.example.marvelisimo.fragment.CharacterList.Companion.INTENT_PARCELABLE
@@ -27,12 +27,12 @@ class DetailView : AppCompatActivity() {
         favorite.setOnClickListener {
             if (!fp.alreadyFavorited(marvelItem)) {
                 db.saveToDb(marvelItem)
-                Toast.makeText(this, "Favorited", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, "Favorite", Toast.LENGTH_SHORT).show()
                 //TODO Change color of favorite icon
 
             } else {
                 db.removeFromDb(marvelItem.id)
-                Toast.makeText(this, "Already a favorite", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, "Removed from favorites", Toast.LENGTH_SHORT).show()
             }
         }
 
