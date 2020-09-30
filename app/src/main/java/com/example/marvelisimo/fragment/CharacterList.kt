@@ -35,6 +35,7 @@ class CharacterList : AppCompatActivity() {
         findViewById<TextView>(R.id.character_toolbar).setTypeface(null, Typeface.BOLD);
 
         val noFavorites: TextView = findViewById(R.id.no_favorites)
+        val noSearchResult = findViewById<TextView>(R.id.no_search)
         val favorite = findViewById<ImageView>(R.id.favorite_icon)
         val comicsToolbarLink = findViewById<TextView>(R.id.comics_toolbar)
         val charactersToolbarLink = findViewById<TextView>(R.id.character_toolbar)
@@ -59,6 +60,7 @@ class CharacterList : AppCompatActivity() {
         }
         charactersToolbarLink.setOnClickListener {
             noFavorites.visibility = TextView.GONE
+            noSearchResult.visibility = View.GONE
             refreshCharacters()
         }
 
@@ -73,6 +75,7 @@ class CharacterList : AppCompatActivity() {
         confirmSearch.setOnClickListener {
             searchField.visibility = View.GONE
             confirmSearch.visibility = View.GONE
+            noSearchResult.visibility = View.GONE
             val searchValue = searchField.text.toString()
             viewModel.searchCharacters(searchValue).observe(this, {
                 val comicList = it.data.results.map { comic ->
@@ -85,7 +88,11 @@ class CharacterList : AppCompatActivity() {
                         comic.urls[0].url
                     )
                 }
+                if (comicList.isEmpty()){
+                    noSearchResult.visibility = View.VISIBLE
+                }
                 loadIntoRecycleView(this, comicList)
+
             })
 
         }
