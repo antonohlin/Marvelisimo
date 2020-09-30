@@ -12,7 +12,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.marvelisimo.R
 import com.example.marvelisimo.adapter.MarvelAdapter
 import com.example.marvelisimo.model.MarvelItem
-import com.example.marvelisimo.viewmodel.MarvelViewModel
+import com.example.marvelisimo.viewmodel.FavoritesViewModel
 import kotlinx.android.synthetic.main.layout_character_list_.*
 
 class FavoriteList : AppCompatActivity() {
@@ -29,16 +29,28 @@ class FavoriteList : AppCompatActivity() {
 
         val comicsToolbarLink = findViewById<TextView>(R.id.comics_toolbar)
         val characterToolbarLink = findViewById<TextView>(R.id.character_toolbar)
-        val viewModel: MarvelViewModel by viewModels()
+        val viewModel: FavoritesViewModel by viewModels()
         val fp = FunctionProvider()
 
         if (fp.isOnline(this)) {
-            val faves = viewModel.loadFavorites()
-            if (faves.isEmpty()) {
-                findViewById<TextView>(R.id.no_favorites).visibility = VISIBLE
-            } else {
-                loadIntoRecycleView(this, faves)
-            }
+
+            viewModel.loadFavorites().observe(this, {
+                val favorites = it.map { fav ->
+                    MarvelItem(
+                        fav.id,
+                        fav.name,
+                        fav.imageUrlBase,
+                        fav.extension,
+                        fav.description,
+                        fav.url
+                    )
+                }
+
+                if (favorites.isEmpty()) {
+                    findViewById<TextView>(R.id.no_favorites).visibility = VISIBLE
+                }else
+                loadIntoRecycleView(this, favorites)
+            })
         }
 
         comicsToolbarLink.setOnClickListener {

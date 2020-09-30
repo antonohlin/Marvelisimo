@@ -86,16 +86,8 @@ class CharacterList : AppCompatActivity() {
 
         }
 
-        if (fp.isOnline(this)) {
-           refreshCharacters()
-        } else {
-            val faves = viewModel.loadFavorites()
-            if (faves.isEmpty()) {
-                findViewById<TextView>(R.id.no_favorites).visibility = VISIBLE
-            } else {
-                goToFavorites()
-            }
-        }
+        if (fp.isOnline(this)) { refreshCharacters()
+        } else goToFavorites()
     }
 
     private fun refreshCharacters(){
