@@ -5,10 +5,6 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.View.VISIBLE
-import android.view.inputmethod.InputMethodManager
-import android.widget.Button
-import android.widget.EditText
-import android.widget.ImageView
 import android.widget.TextView
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
@@ -33,12 +29,15 @@ class FavoriteList : AppCompatActivity() {
 
         val comicsToolbarLink = findViewById<TextView>(R.id.comics_toolbar)
         val characterToolbarLink = findViewById<TextView>(R.id.character_toolbar)
-        val confirmSearch = findViewById<Button>(R.id.confirmSearchButton)
-        val searchToolbarLink = findViewById<ImageView>(R.id.search)
-        val searchField = findViewById<EditText>(R.id.SearchCharacterComic)
-        val imm = getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
         val viewModel: MarvelViewModel by viewModels()
-        
+
+            val faves = viewModel.loadFavorites()
+            if (faves.isEmpty()) {
+                findViewById<TextView>(R.id.no_connection).visibility = VISIBLE
+            } else {
+                loadIntoRecycleView(this, faves)
+            }
+
         comicsToolbarLink.setOnClickListener {
             goToComics()
         }
@@ -47,21 +46,7 @@ class FavoriteList : AppCompatActivity() {
             goToCharacters()
         }
 
-        searchToolbarLink.setOnClickListener {
-            searchField.visibility = VISIBLE
-            searchField.hint = "Search characters"
-            confirmSearch.visibility = VISIBLE
-            searchField.requestFocus()
-            imm.showSoftInput(searchField, InputMethodManager.SHOW_IMPLICIT)
-        }
-
-            val faves = viewModel.loadFavorites()
-            if (faves.isEmpty()) {
-                findViewById<TextView>(R.id.no_connection).visibility = VISIBLE
-            } else {
-                loadIntoRecycleView(this, faves)
-            }
-        }
+    }
 
     private fun loadIntoRecycleView(context: Context, results: List<MarvelItem>) {
         recycler_view.layoutManager = LinearLayoutManager(context)
@@ -71,7 +56,6 @@ class FavoriteList : AppCompatActivity() {
             intent.putExtra(INTENT_PARCELABLE, it)
             startActivity(intent)
         }
-
     }
 
     private fun goToComics() {
@@ -80,7 +64,7 @@ class FavoriteList : AppCompatActivity() {
     }
 
     private fun goToCharacters() {
-        val intent = Intent(this, ComicList::class.java)
+        val intent = Intent(this, CharacterList::class.java)
         startActivity(intent)
     }
 }

@@ -19,6 +19,7 @@ class DetailView : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.layout_detail_view)
         setSupportActionBar(findViewById(R.id.toolbar))
+
         val marvelItem = intent.getParcelableExtra<MarvelItem>(INTENT_PARCELABLE)
         val favorite = findViewById<ImageView>(R.id.favorite)
         val db = DbHelper()
@@ -54,6 +55,11 @@ class DetailView : AppCompatActivity() {
 
         findViewById<TextView>(R.id.comics_toolbar).setOnClickListener() {
             val intent = Intent(this, ComicList::class.java)
+            startActivity(intent)
+        }
+
+        findViewById<ImageView>(R.id.favorite_icon).setOnClickListener(){
+            val intent = Intent(this, FavoriteList::class.java)
             startActivity(intent)
         }
     }

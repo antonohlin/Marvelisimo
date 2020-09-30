@@ -46,12 +46,7 @@ class CharacterList : AppCompatActivity() {
         val fp = FunctionProvider()
 
         favorite.setOnClickListener {
-            val favorites = viewModel.loadFavorites()
-
-            if (favorites.isEmpty()) {
-                noFavorites.visibility = TextView.VISIBLE
-            }
-            loadIntoRecycleView(this, favorites)
+            goToFavorites()
         }
 
         comicsToolbarLink.setOnClickListener {
@@ -75,14 +70,14 @@ class CharacterList : AppCompatActivity() {
             confirmSearch.visibility = View.GONE
             val searchValue = searchField.text.toString()
             viewModel.searchCharacters(searchValue).observe(this, {
-                val comicList = it.data.results.map { comic ->
+                val comicList = it.data.results.map { char ->
                     MarvelItem(
-                        comic.id,
-                        comic.name,
-                        comic.thumbnail.path,
-                        comic.thumbnail.extension,
-                        comic.description,
-                        comic.urls[0].url
+                        char.id,
+                        char.name,
+                        char.thumbnail.path,
+                        char.thumbnail.extension,
+                        char.description,
+                        char.urls[0].url
                     )
                 }
                 loadIntoRecycleView(this, comicList)
@@ -93,10 +88,9 @@ class CharacterList : AppCompatActivity() {
         if (fp.isOnline(this)) {
            refreshCharacters()
         } else {
-            println("No internet lol")
             val faves = viewModel.loadFavorites()
             if (faves.isEmpty()) {
-                findViewById<TextView>(R.id.no_connection).visibility = VISIBLE
+                findViewById<TextView>(R.id.no_favorites).visibility = VISIBLE
             } else {
                 loadIntoRecycleView(this, faves)
             }
@@ -124,6 +118,11 @@ class CharacterList : AppCompatActivity() {
 
     private fun goToComics() {
         val intent = Intent(this, ComicList::class.java)
+        startActivity(intent)
+    }
+
+    private fun goToFavorites() {
+        val intent = Intent(this, FavoriteList::class.java)
         startActivity(intent)
     }
 

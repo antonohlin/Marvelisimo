@@ -49,6 +49,5 @@ class MarvelAdapter(
             itemView.setOnClickListener { listener(item) }
         }
 
-
     }
 }

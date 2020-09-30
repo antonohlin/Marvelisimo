@@ -21,13 +21,15 @@ import kotlinx.android.synthetic.main.layout_character_list_.*
 
 class ComicList : AppCompatActivity() {
 
+    companion object {
+        const val INTENT_PARCELABLE = "MARVEL_ITEM"
+    }
     override fun onCreate(savedInstanceState: Bundle?) {
 
         super.onCreate(savedInstanceState)
         setContentView(R.layout.layout_character_list_)
         findViewById<TextView>(R.id.comics_toolbar).setTypeface(null, Typeface.BOLD);
 
-        val noFavorites: TextView = findViewById<TextView>(R.id.no_favorites)
         val favorite = findViewById<ImageView>(R.id.favorite_icon)
         val characterToolbarLink = findViewById<TextView>(R.id.character_toolbar)
         val comicToolbarLink = findViewById<TextView>(R.id.comics_toolbar)
@@ -46,21 +48,16 @@ class ComicList : AppCompatActivity() {
             refreshComics()
         }
 
+        favorite.setOnClickListener{
+            goToFavorites()
+        }
+
         searchToolbarLink.setOnClickListener {
             searchField.visibility = View.VISIBLE
             searchField.hint = "Search comics"
             confirmSearch.visibility = View.VISIBLE
             searchField.requestFocus()
             imm.showSoftInput(searchField, InputMethodManager.SHOW_IMPLICIT)
-        }
-
-        favorite.setOnClickListener{
-            val favorites = viewModel.loadFavorites()
-
-            if (favorites.isEmpty()){
-                noFavorites.visibility = TextView.VISIBLE
-            }
-            loadIntoRecycleView(this, favorites)
         }
 
         confirmSearch.setOnClickListener {
@@ -78,8 +75,7 @@ class ComicList : AppCompatActivity() {
         if (fp.isOnline(this)) {
             refreshComics()
         } else {
-            println("No internet lol")
-            findViewById<TextView>(R.id.no_connection).visibility = View.VISIBLE
+            goToFavorites()
         }
     }
     private fun refreshComics(){
@@ -97,12 +93,17 @@ class ComicList : AppCompatActivity() {
         startActivity(intent)
     }
 
+    private fun goToFavorites() {
+        val intent = Intent(this, FavoriteList::class.java)
+        startActivity(intent)
+    }
+
     private fun loadIntoRecycleView(context: Context, results: List<MarvelItem>) {
         recycler_view.layoutManager = LinearLayoutManager(context)
         recycler_view.setHasFixedSize(true)
         recycler_view.adapter = MarvelAdapter(context, results) {
             val intent = Intent(this, DetailView::class.java)
-            intent.putExtra(CharacterList.INTENT_PARCELABLE, it)
+            intent.putExtra(INTENT_PARCELABLE, it)
             startActivity(intent)
         }
     }
